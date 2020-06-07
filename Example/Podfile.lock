@@ -1,0 +1,16 @@
+PODS:
+  - FullStorySegmentMiddleware (0.1.0)
+
+DEPENDENCIES:
+  - FullStorySegmentMiddleware (from `../`)
+
+EXTERNAL SOURCES:
+  FullStorySegmentMiddleware:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FullStorySegmentMiddleware: 83f780b02a1df57278719c92f42c4d277a027a86
+
+PODFILE CHECKSUM: 24432b596673a7dae2ef9dfaf0002d5c40d7169a
+
+COCOAPODS: 1.9.1
