@@ -345,10 +345,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FullStorySegmentMiddleware_Example/Pods-FullStorySegmentMiddleware_Example-frameworks.sh",
+				"${PODS_ROOT}/FullStory/FullStory.framework",
+				"${BUILT_PRODUCTS_DIR}/Analytics/Analytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FullStorySegmentMiddleware/FullStorySegmentMiddleware.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FullStory.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Analytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FullStorySegmentMiddleware.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
