@@ -78,14 +78,13 @@
         // Always log the segment event with INFO level to FullStory dev tools
         [FS logWithLevel:FSLOG_INFO format:@"Segment event type: %@", [self getEventName:ctx.eventType]];
         
-        // Create local var: payload, is not nil only when the evnet is Track or Screen
-        SEGPayload *payload = [self getNewPayloadWithFSURL:context];
-        
         // Only override the ctx.payload if:
         // - is Track or Screen event
         // - enabled FS session URL as part of the track/screen event properties
-        if(self.enableFSSessionURLInEvents && payload != nil){
-            ctx.payload = payload;
+        if(self.enableFSSessionURLInEvents){
+            // Create local var: payload, is not nil only when the evnet is Track or Screen
+            SEGPayload *payload = [self getNewPayloadWithFSURL:context];
+            if(payload != nil) ctx.payload = payload;
         }
     }]);
 }
