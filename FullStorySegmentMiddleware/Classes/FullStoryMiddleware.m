@@ -127,7 +127,7 @@
 
 - (NSDictionary *) getSuffixedProps: (NSDictionary *)properties{
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:properties];
-
+    //TODO: Segment does not allow props to have curcular dependency, but we should handle it here anyways
     for(id key in properties){
         // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
         const char* typeCode = @encode(typeof([props valueForKey:key]));
