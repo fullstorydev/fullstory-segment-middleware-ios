@@ -13,20 +13,20 @@
 
 @implementation FullStoryMiddleware
 
-- (id)initWithWhitelistEvents:(NSArray<NSString *> *) whitelistEvents {
+- (id)initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents {
      if (self = [super init]) {
          self.enableSendScreenAsEvents = false;
          self.enableGroupTraitsAsUserVars = false;
          self.enableFSSessionURLInEvents = true;
-         self.whitelistAllTrackEvents = false;
-         self.whitelistEvents = [[NSMutableArray alloc] initWithArray:whitelistEvents];
+         self.allowlistAllTrackEvents = false;
+         self.allowlistEvents = [[NSMutableArray alloc] initWithArray:allowlistEvents];
      }
     return self;
 }
 
 - (id)init{
-    // Init with no whitelisted events
-    return [self initWithWhitelistEvents:nil];
+    // Init with no allowlisted events
+    return [self initWithAllowlistEvents:nil];
 }
 
 - (void)context:(SEGContext * _Nonnull)context next:(SEGMiddlewareNext _Nonnull)next {
@@ -61,9 +61,9 @@
             }
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
-                // Segment Track event, optionally enabled /w events whitelisted, send as custom events into FullStory
-                if(self.whitelistAllTrackEvents || [self.whitelistEvents containsObject:payload.event]){
-                    [FS event:payload.event properties:payload.properties];
+                // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
+                if(self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]){
+                    [FS event:payload.event properties:props];
                 }
                 break;
             }
