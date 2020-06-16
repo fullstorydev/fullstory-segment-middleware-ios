@@ -61,7 +61,7 @@
             }
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
-                // Segment Track event, optionally enabled /w events aloowlisted, send as custom events into FullStory
+                // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
                 if(self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]){
                     [FS event:payload.event properties:props];
                 }
