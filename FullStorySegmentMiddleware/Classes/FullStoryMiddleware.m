@@ -61,6 +61,10 @@
             }
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
+
+                 // transform props to comply with FS custome events requriement
+                NSDictionary *props = [self getSuffixedProps:payload.properties];
+
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
                 if(self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]){
                     [FS event:payload.event properties:props];
@@ -126,88 +130,80 @@
 
 
 - (NSDictionary *) getSuffixedProps: (NSDictionary *)properties{
-    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:properties];
-    //TODO: Segment does not allow props to have curcular dependency, but we should handle it here anyways
+    //TODO: Segment will crash and not allow props to have curcular dependency, but we should handle it here anyways
+    
+    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
     for(id key in properties){
+        NSString *suffix = @"";
+
+        // properties should always be a NSDictionary, but still check to make sure the value is an object
         // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
         const char* typeCode = @encode(typeof([props valueForKey:key]));
         NSLog(@"typeCode for %@ is: %s",key,typeCode);
-        NSString *suffix = [[NSString alloc] init];
-        
-        NSObject *obj = [props valueForKey:key];
-        // make sure the value is an object
+
         if([@"@" isEqualToString:@(typeCode)]){
-            [props removeObjectForKey:key];
-            // NSDictionary: recurrsively check for types, and we can not take underscore so we just replace them with dashes
+            NSObject *obj = [properties valueForKey:key];
+            
+            // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we just replace them with dashes
+            // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
             if([obj isKindOfClass:[NSDictionary class]]){
                 [props setValue:[self getSuffixedProps:[properties valueForKey:key]]
                          forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
             }else if ([obj isKindOfClass:[NSArray class]]){
-//                // array of objects? array of strings/ints/numbers? yuck!
+                // array of dicts? array of strings/ints/numbers? yuck!
                 NSMutableArray *arr = (NSMutableArray *) obj;
+                // FS does not accept array of dicts, only premitive arrays allowed
+                // So if it's an array of dicts, then we need to convert the root array to a dict so it becomes nested dicts
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-//
+
                 for (int i = 0; i < [arr count]; i++){
                     NSObject *item = arr[i];
-                    // if array of Dictionaries
                     if([item isKindOfClass:[NSDictionary class]]){
+                        // if array of dict objects, we need to convert the array to object, and give each item a key (server side restriction)
                         [dict setObject:[self getSuffixedProps:(NSDictionary *) item]
+                                 forKey:[key stringByAppendingFormat:@"%d",i]];
+                    }else if([item isKindOfClass:[NSArray class]]){
+                        // TODO: Segment spec should not allow nested array properties, ignore for now, but we should handle it eventually
+                        [dict setObject:item
                                  forKey:[key stringByAppendingFormat:@"%d",i]];
                     }else{
                         suffix = [[self getSuffixStringFromObject:item] stringByAppendingString:@"s"];
-                        NSLog(@"Arr suffix is: %@", suffix);
+                        // if there are arrays of mixed type, then in the final props we will add approporate values to the same, key but with each type suffix
+                        // get the current array form this suffix, if any, then append current item
+                        NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:[props valueForKey:[key stringByAppendingString:suffix]]];
+                        [tempArr addObject:item];
+                        [props setValue:tempArr forKey:[key stringByAppendingString:suffix]];
                     }
                 }
-                [props setValue:arr forKey:[key stringByAppendingString:suffix]];
                 [props setValue:dict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
             }else{
                 suffix = [self getSuffixStringFromObject:obj];
+                
                 [props setValue:[properties valueForKey:key] forKey:[key stringByAppendingString:suffix]];
             }
         }else{
-            NSLog(@"is not object");
+            #ifdef DEBUG
+                NSAssert(FALSE, @"key `%@` is not an object can't be serialized for FS custom event.", key);
+            #else
+                NSLog(@"key `%@` is not an object can't be serialized for FS custom event.", key);
+                // if prod, then don't send it
+            #endif
         }
-        
-        NSLog(@"new props is %@", props);
-        
-        
-        //
-        //        // handle premitive types:
-        //               if ( NSNotFound != [[NSString stringWithFormat:@"%s", typeCode] rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]].location ) {
-        //                   //this value is struct, do not handle
-        //               }
-        //               else if ( [@"i" isEqualToString:@(typeCode)] )
-        //               {
-        //                   //this value is int
-        //               }
-        //
-        //        // do type check if there is underscore
-        //               if([key containsString:@"_"]){
-        //                   // FS requirements: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
-        //                   NSLog(@"%@ contains _",key);
-        //                   if([[props valueForKey:key] isKindOfClass:[NSString class]]){
-        //
-        //                   }else if([[props valueForKey:key] isKindOfClass:[NSNumber class]]){
-        //                       NSLog(@"%@ is number",key);
-        //                   }
-        //
-        //               }
     }
-    
-    
-    
-    
     return props;
 }
 
 - (NSString *) getSuffixStringFromObject: (NSObject *) obj{
     // defualt to string
     NSString *suffix = @"_str";
-    
     if([obj isKindOfClass:[NSNumber class]]){
+        // defaut to real
         suffix = @"_real";
-    }else if([obj isKindOfClass:[NSString class]]){
-        suffix = @"_str";
+        NSNumber *n = (NSNumber *) obj;
+        const char *type = n.objCType;
+        if([@"i" isEqualToString:@(type)]) suffix = @"_int";
+        // bool type number doesn't get encoded into 'B' but check anyway
+        else if ([@"B" isEqualToString:@(type)])suffix = @"_bool";
     }else if ([obj isKindOfClass:[NSDate class]]){
         suffix = @"_date";
     }
