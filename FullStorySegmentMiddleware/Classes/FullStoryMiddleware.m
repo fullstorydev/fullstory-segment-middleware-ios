@@ -61,8 +61,6 @@
             }
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
-                
-                NSDictionary *props = [self getSuffixedProps:payload.properties];
                 // Segment Track event, optionally enabled /w events aloowlisted, send as custom events into FullStory
                 if(self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]){
                     [FS event:payload.event properties:props];
