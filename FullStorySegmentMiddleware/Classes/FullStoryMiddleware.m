@@ -124,6 +124,96 @@
     return newPayload;
 }
 
+
+- (NSDictionary *) getSuffixedProps: (NSDictionary *)properties{
+    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:properties];
+
+    for(id key in properties){
+        // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+        const char* typeCode = @encode(typeof([props valueForKey:key]));
+        NSLog(@"typeCode for %@ is: %s",key,typeCode);
+        NSString *suffix = [[NSString alloc] init];
+        
+        NSObject *obj = [props valueForKey:key];
+        // make sure the value is an object
+        if([@"@" isEqualToString:@(typeCode)]){
+            [props removeObjectForKey:key];
+            // NSDictionary: recurrsively check for types, and we can not take underscore so we just replace them with dashes
+            if([obj isKindOfClass:[NSDictionary class]]){
+                [props setValue:[self getSuffixedProps:[properties valueForKey:key]]
+                         forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
+            }else if ([obj isKindOfClass:[NSArray class]]){
+//                // array of objects? array of strings/ints/numbers? yuck!
+                NSMutableArray *arr = (NSMutableArray *) obj;
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+//
+                for (int i = 0; i < [arr count]; i++){
+                    NSObject *item = arr[i];
+                    // if array of Dictionaries
+                    if([item isKindOfClass:[NSDictionary class]]){
+                        [dict setObject:[self getSuffixedProps:(NSDictionary *) item]
+                                 forKey:[key stringByAppendingFormat:@"%d",i]];
+                    }else{
+                        suffix = [[self getSuffixStringFromObject:item] stringByAppendingString:@"s"];
+                        NSLog(@"Arr suffix is: %@", suffix);
+                    }
+                }
+                [props setValue:arr forKey:[key stringByAppendingString:suffix]];
+                [props setValue:dict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
+            }else{
+                suffix = [self getSuffixStringFromObject:obj];
+                [props setValue:[properties valueForKey:key] forKey:[key stringByAppendingString:suffix]];
+            }
+        }else{
+            NSLog(@"is not object");
+        }
+        
+        NSLog(@"new props is %@", props);
+        
+        
+        //
+        //        // handle premitive types:
+        //               if ( NSNotFound != [[NSString stringWithFormat:@"%s", typeCode] rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]].location ) {
+        //                   //this value is struct, do not handle
+        //               }
+        //               else if ( [@"i" isEqualToString:@(typeCode)] )
+        //               {
+        //                   //this value is int
+        //               }
+        //
+        //        // do type check if there is underscore
+        //               if([key containsString:@"_"]){
+        //                   // FS requirements: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
+        //                   NSLog(@"%@ contains _",key);
+        //                   if([[props valueForKey:key] isKindOfClass:[NSString class]]){
+        //
+        //                   }else if([[props valueForKey:key] isKindOfClass:[NSNumber class]]){
+        //                       NSLog(@"%@ is number",key);
+        //                   }
+        //
+        //               }
+    }
+    
+    
+    
+    
+    return props;
+}
+
+- (NSString *) getSuffixStringFromObject: (NSObject *) obj{
+    // defualt to string
+    NSString *suffix = @"_str";
+    
+    if([obj isKindOfClass:[NSNumber class]]){
+        suffix = @"_real";
+    }else if([obj isKindOfClass:[NSString class]]){
+        suffix = @"_str";
+    }else if ([obj isKindOfClass:[NSDate class]]){
+        suffix = @"_date";
+    }
+    return suffix;
+}
+
 // get all possible events from Event integer enum: https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/#usage
 - (NSString *) getEventName:(SEGEventType)type {
     NSArray *eventArr =@[
