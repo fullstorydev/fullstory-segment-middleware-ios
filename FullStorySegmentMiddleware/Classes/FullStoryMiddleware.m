@@ -139,46 +139,22 @@
         // properties should always be a NSDictionary, but still check to make sure the value is an object
         // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
         const char* typeCode = @encode(typeof([props valueForKey:key]));
-        NSLog(@"typeCode for %@ is: %s",key,typeCode);
 
         if([@"@" isEqualToString:@(typeCode)]){
             NSObject *obj = [properties valueForKey:key];
             
-            // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we just replace them with dashes
+            // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we just remove them
             // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
             if([obj isKindOfClass:[NSDictionary class]]){
                 [props setValue:[self getSuffixedProps:[properties valueForKey:key]]
-                         forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
+                         forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
             }else if ([obj isKindOfClass:[NSArray class]]){
                 // array of dicts? array of strings/ints/numbers? yuck!
                 NSMutableArray *arr = (NSMutableArray *) obj;
-                // FS does not accept array of dicts, only premitive arrays allowed
-                // So if it's an array of dicts, then we need to convert the root array to a dict so it becomes nested dicts
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-
-                for (int i = 0; i < [arr count]; i++){
-                    NSObject *item = arr[i];
-                    if([item isKindOfClass:[NSDictionary class]]){
-                        // if array of dict objects, we need to convert the array to object, and give each item a key (server side restriction)
-                        [dict setObject:[self getSuffixedProps:(NSDictionary *) item]
-                                 forKey:[key stringByAppendingFormat:@"%d",i]];
-                    }else if([item isKindOfClass:[NSArray class]]){
-                        // TODO: Segment spec should not allow nested array properties, ignore for now, but we should handle it eventually
-                        [dict setObject:item
-                                 forKey:[key stringByAppendingFormat:@"%d",i]];
-                    }else{
-                        suffix = [[self getSuffixStringFromObject:item] stringByAppendingString:@"s"];
-                        // if there are arrays of mixed type, then in the final props we will add approporate values to the same, key but with each type suffix
-                        // get the current array form this suffix, if any, then append current item
-                        NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:[props valueForKey:[key stringByAppendingString:suffix]]];
-                        [tempArr addObject:item];
-                        [props setValue:tempArr forKey:[key stringByAppendingString:suffix]];
-                    }
-                }
-                [props setValue:dict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@"-"]];
+                NSDictionary *dict = [self getObjectFromArrayObject:arr withKey:key];
+                [props addEntriesFromDictionary:dict];
             }else{
-                suffix = [self getSuffixStringFromObject:obj];
-                
+                suffix = [self getSuffixStringFromSimpleObject:obj];
                 [props setValue:[properties valueForKey:key] forKey:[key stringByAppendingString:suffix]];
             }
         }else{
@@ -193,9 +169,9 @@
     return props;
 }
 
-- (NSString *) getSuffixStringFromObject: (NSObject *) obj{
+- (NSString *) getSuffixStringFromSimpleObject: (NSObject *) obj{
+    NSString * suffix;
     // defualt to string
-    NSString *suffix = @"_str";
     if([obj isKindOfClass:[NSNumber class]]){
         // defaut to real
         suffix = @"_real";
@@ -206,8 +182,40 @@
         else if ([@"B" isEqualToString:@(type)])suffix = @"_bool";
     }else if ([obj isKindOfClass:[NSDate class]]){
         suffix = @"_date";
+    }else if([obj isKindOfClass:[NSString class]]){
+        suffix = @"_str";
     }
     return suffix;
+}
+
+- (NSDictionary *) getObjectFromArrayObject: (NSArray *) arr withKey:(NSString *) key{
+    // FS does not accept array of dicts, only premitive arrays allowed
+    // So if it's an array of dicts, then we need to convert the root array to a dict so it becomes nested dicts
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+
+    for (int i = 0; i < [arr count]; i++){
+        NSObject *item = arr[i];
+        if([item isKindOfClass:[NSDictionary class]]){
+            // if array of dict objects, we need to convert the array to object, and give each item a key (this is a server side restriction)
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:@{[@"idx" stringByAppendingFormat:@"%d",i]:[self getSuffixedProps:(NSDictionary *) item]}];
+            [tempDict addEntriesFromDictionary:[dict valueForKey:key]];
+            [dict setObject:tempDict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
+        }else if([item isKindOfClass:[NSArray class]]){
+            // TODO: Segment spec should not allow nested array properties, ignore for now, but we should handle it eventually
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:@{[@"idx" stringByAppendingFormat:@"%d",i]:item}];
+            [tempDict addEntriesFromDictionary:[dict valueForKey:key]];
+            [dict setObject:tempDict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
+        }else{
+            //default to simple object
+            NSString* suffix = [[self getSuffixStringFromSimpleObject:item] stringByAppendingString:@"s"];
+            // if there are arrays of mixed type, then in the final props we will add approporate values to the same, key but with each type suffix
+            // get the current array form this suffix, if any, then append current item
+            NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:[dict valueForKey:[key stringByAppendingString:suffix]]];
+            [tempArr addObject:item];
+            [dict setValue:tempArr forKey:[key stringByAppendingString:suffix]];
+        }
+    }
+    return dict;
 }
 
 // get all possible events from Event integer enum: https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/#usage
