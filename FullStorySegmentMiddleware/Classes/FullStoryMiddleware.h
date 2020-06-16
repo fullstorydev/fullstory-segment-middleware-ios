@@ -11,12 +11,12 @@
 
 @interface FullStoryMiddleware : NSObject<SEGMiddleware>
 
-@property (strong, nonatomic) NSArray* whitelistEvents;
+@property (strong, nonatomic) NSArray* allowlistEvents;
 @property (nonatomic) BOOL enableSendScreenAsEvents;
 @property (nonatomic) BOOL enableGroupTraitsAsUserVars;
 @property (nonatomic) BOOL enableFSSessionURLInEvents;
-@property (nonatomic) BOOL whitelistAllTrackEvents;
+@property (nonatomic) BOOL allowlistAllTrackEvents;
 
-- (id) initWithWhitelistEvents:(NSArray<NSString *> *) whitelistEvents;
+- (id) initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
 
 @end
