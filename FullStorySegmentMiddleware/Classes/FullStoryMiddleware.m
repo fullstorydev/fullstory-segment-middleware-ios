@@ -21,18 +21,20 @@
          self.allowlistAllTrackEvents = false;
          self.allowlistEvents = [[NSMutableArray alloc] initWithArray:allowlistEvents];
      }
+
     return self;
 }
 
 - (id)init{
+
     // Init with no allowlisted events
     return [self initWithAllowlistEvents:nil];
 }
 
 - (void)context:(SEGContext * _Nonnull)context next:(SEGMiddlewareNext _Nonnull)next {
-    next([context modify:^(id<SEGMutableContext>  _Nonnull ctx) {
+    next ([context modify:^(id<SEGMutableContext>  _Nonnull ctx) {
         // TODO: add support for Options
-        switch(ctx.eventType){
+        switch (ctx.eventType) {
             case SEGEventTypeGroup:{
                 SEGGroupPayload *payload = (SEGGroupPayload *) ctx.payload;
                 // Create mutable userVars and optionally add the group traits as userVars to be assoicated to the user in FullStory
@@ -53,20 +55,20 @@
             case SEGEventTypeScreen:{
                 SEGScreenPayload *payload = (SEGScreenPayload *) ctx.payload;
                 // Segment Screen event, optionally enabled and send as custom events into FullStory
-                if(self.enableSendScreenAsEvents){
+                if (self.enableSendScreenAsEvents) {
                     NSString *name = [[NSString alloc] initWithFormat:@"Segment Screen: %@",payload.name];
                     [FS event:name properties:payload.properties];
                 }
                 break;
             }
-            case SEGEventTypeTrack: {
+            case SEGEventTypeTrack:{
                 SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
 
-                 // transform props to comply with FS custome events requriement
+                // transform props to comply with FS custome events requriement
                 NSDictionary *props = [self getSuffixedProps:payload.properties];
-
+                NSLog(@"props final: %@",props);
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
-                if(self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]){
+                if (self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]) {
                     [FS event:payload.event properties:props];
                 }
                 break;
@@ -85,10 +87,10 @@
         // Only override the ctx.payload if:
         // - is Track or Screen event
         // - enabled FS session URL as part of the track/screen event properties
-        if(self.enableFSSessionURLInEvents){
+        if (self.enableFSSessionURLInEvents) {
             // Create local var: payload, is not nil only when the evnet is Track or Screen
             SEGPayload *payload = [self getNewPayloadWithFSURL:context];
-            if(payload != nil) ctx.payload = payload;
+            if (payload != nil) ctx.payload = payload;
         }
     }]);
 }
@@ -125,102 +127,148 @@
             newPayload = nil;
             break;
     }
+
     return newPayload;
 }
 
 
-- (NSDictionary *) getSuffixedProps: (NSDictionary *)properties{
+- (NSDictionary *) getSuffixedProps: (NSDictionary *)properties {
     //TODO: Segment will crash and not allow props to have curcular dependency, but we should handle it here anyways
     
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
-    for(id key in properties){
+    for(NSString *key in properties){
         NSString *suffix = @"";
 
-        // properties should always be a NSDictionary, but still check to make sure the value is an object
+        // properties should always be a NSDictionary, but still check to make sure the value we get is an object
         // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-        const char* typeCode = @encode(typeof([props valueForKey:key]));
+        const char* typeCode = @encode(typeof(props[key]));
 
-        if([@"@" isEqualToString:@(typeCode)]){
-            NSObject *obj = [properties valueForKey:key];
+        if ([@"@" isEqualToString:@(typeCode)]) {
+            NSObject *obj = properties[key];
             
-            // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we just remove them
+            // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects
             // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
-            if([obj isKindOfClass:[NSDictionary class]]){
-                [props setValue:[self getSuffixedProps:[properties valueForKey:key]]
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                [props setValue:[self getSuffixedProps:properties[key]]
                          forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
-            }else if ([obj isKindOfClass:[NSArray class]]){
+            } else if ([obj isKindOfClass:[NSArray class]]) {
                 // array of dicts? array of strings/ints/numbers? yuck!
-                NSMutableArray *arr = (NSMutableArray *) obj;
-                NSDictionary *dict = [self getObjectFromArrayObject:arr withKey:key];
+                NSArray *arr = (NSArray *) obj;
+                NSDictionary *dict = [self getDictionaryFromArrayObject:arr withKey:key];
                 [props addEntriesFromDictionary:dict];
-            }else{
+            } else {
+                // if this is not a dictionary or array, then treat it like simple values, if data falls outside of these, we don't try to infer anything and just send as is to the server
                 suffix = [self getSuffixStringFromSimpleObject:obj];
-                [props setValue:[properties valueForKey:key] forKey:[key stringByAppendingString:suffix]];
+                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andValue:properties[key]];
             }
         }else{
             #ifdef DEBUG
                 NSAssert(FALSE, @"key `%@` is not an object can't be serialized for FS custom event.", key);
             #else
                 NSLog(@"key `%@` is not an object can't be serialized for FS custom event.", key);
-                // if prod, then don't send it
+                // if prod, then ignore this pops all together
             #endif
         }
     }
+
     return props;
 }
 
-- (NSString *) getSuffixStringFromSimpleObject: (NSObject *) obj{
-    NSString * suffix;
-    // defualt to string
-    if([obj isKindOfClass:[NSNumber class]]){
+- (NSString *) getSuffixStringFromSimpleObject: (NSObject *) obj {
+    // default to no suffix;
+    NSString * suffix = @"";
+    if ([obj isKindOfClass:[NSNumber class]]) {
         // defaut to real
         suffix = @"_real";
         NSNumber *n = (NSNumber *) obj;
         const char *type = n.objCType;
-        if([@"i" isEqualToString:@(type)]) suffix = @"_int";
-        // bool type number doesn't get encoded into 'B' but check anyway
-        else if ([@"B" isEqualToString:@(type)])suffix = @"_bool";
-    }else if ([obj isKindOfClass:[NSDate class]]){
+        if([@"i" isEqualToString:@(type)]) {
+            suffix = @"_int";
+        } else if ([@"B" isEqualToString:@(type)]) {
+            // bool-type gets encoded as number number, and doesn't get encoded into 'B', but check anyway
+            suffix = @"_bool";
+        }
+    } else if ([obj isKindOfClass:[NSDate class]]) {
         suffix = @"_date";
-    }else if([obj isKindOfClass:[NSString class]]){
+    } else if([obj isKindOfClass:[NSString class]]) {
         suffix = @"_str";
     }
+
     return suffix;
 }
 
-- (NSDictionary *) getObjectFromArrayObject: (NSArray *) arr withKey:(NSString *) key{
-    // FS does not accept array of dicts, only premitive arrays allowed
-    // So if it's an array of dicts, then we need to convert the root array to a dict so it becomes nested dicts
+- (NSDictionary *) getDictionaryFromArrayObject:(NSArray *) arr withKey:(NSString *) key {
+    // FS does not accept array of dicts, only "premitive" arrays allowed
+    // So if it's an array of dicts or nested arrays, then we need to convert the root array to a dict so it becomes nested dicts
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
-    for (int i = 0; i < [arr count]; i++){
+    for (int i = 0; i < [arr count]; i++) {
         NSObject *item = arr[i];
-        if([item isKindOfClass:[NSDictionary class]]){
-            // if array of dict objects, we need to convert the array to object, and give each item a key (this is a server side restriction)
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:@{[@"idx" stringByAppendingFormat:@"%d",i]:[self getSuffixedProps:(NSDictionary *) item]}];
-            [tempDict addEntriesFromDictionary:[dict valueForKey:key]];
-            [dict setObject:tempDict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
-        }else if([item isKindOfClass:[NSArray class]]){
+        
+        if ([item isKindOfClass:[NSDictionary class]]) {
+            // if array of dicts, we then loop through all dicts, flatten out each key/val into arrays, we will loose the object association but it allows user to search for each key/val in the array in FS (i.e. searching for one product when array of products are sent)
+//
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getSuffixedProps:(NSDictionary *) item]];
+            NSLog(@"tempDict: %@, key %@",tempDict, key);
+//            [tempDict addEntriesFromDictionary:dict[key]];
+//            [dict setObject:tempDict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
+            [self appendToDictionary:dict withKey:key andDictionary:tempDict];
+            NSLog(@"dict: %@",dict);
+        } else if ([item isKindOfClass:[NSArray class]]) {
             // TODO: Segment spec should not allow nested array properties, ignore for now, but we should handle it eventually
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:@{[@"idx" stringByAppendingFormat:@"%d",i]:item}];
-            [tempDict addEntriesFromDictionary:[dict valueForKey:key]];
-            [dict setObject:tempDict forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
-        }else{
-            //default to simple object
-            NSString* suffix = [[self getSuffixStringFromSimpleObject:item] stringByAppendingString:@"s"];
+            NSDictionary *tempDict = [self getDictionaryFromArrayObject:(NSArray *)item withKey:key];
+            [self appendToDictionary:dict withKey:key andDictionary:tempDict];
+        } else {
+            // default to simple object
             // if there are arrays of mixed type, then in the final props we will add approporate values to the same, key but with each type suffix
-            // get the current array form this suffix, if any, then append current item
+            NSString* suffix = [[self getSuffixStringFromSimpleObject:item] stringByAppendingString:@"s"];
+            // get the current array form this specified suffix, if any, then append current item
             NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:[dict valueForKey:[key stringByAppendingString:suffix]]];
             [tempArr addObject:item];
             [dict setValue:tempArr forKey:[key stringByAppendingString:suffix]];
         }
     }
+
     return dict;
+}
+
+-(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andDictionary:(NSDictionary *) dict2 {
+    // when adding a parsed array into the result dict, check if the key with suffix already exsist, if so then we need to append to the result arrays insead of replacing the object.
+    for (NSString *key in dict2) {
+        if (dict[key] != nil && [dict[key] isKindOfClass:[NSArray class]]) {
+            NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:dict[key]];
+            [arr addObjectsFromArray:dict2[key]];
+            [dict removeObjectForKey:key];
+            [dict setObject:arr forKey:key];
+        } else if(dict[key] != nil) {
+            // if the current value is not an array already, then delete it and upgrade it to array
+            NSArray *arr = [[NSArray alloc]initWithObjects:dict[key], dict2[key], nil];
+            [dict removeObjectForKey:key];
+            [dict setObject:arr forKey:[key stringByAppendingString:@"s"]];
+        } else {
+             [dict setObject:dict2[key] forKey:key];
+        }
+    }
+}
+
+-(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andValue:(NSObject *) obj {
+    // when adding a parsed array into the result dict, check if the key with suffix already exsist, if so then we need to append to the result arrays insead of replacing the object.
+    if (dict[key] != nil && [dict[key] isKindOfClass:[NSArray class]]) {
+        [dict[key] addObject:obj];
+    } else if(dict[key] != nil) {
+        // if the current value is not an array already, then delete it and upgrade it to array
+        NSArray *arr = [[NSArray alloc]initWithObjects:dict[key], obj, nil];
+        NSString *suffixedKey = [key stringByAppendingString:@"s"];
+        [dict removeObjectForKey:key];
+        [self appendToDictionary:dict withKey:suffixedKey andDictionary:@{suffixedKey: arr}];
+    } else {
+         [dict setObject:obj forKey:key];
+    }
 }
 
 // get all possible events from Event integer enum: https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/#usage
 - (NSString *) getEventName:(SEGEventType)type {
-    NSArray *eventArr =@[
+    NSArray *eventArr = @[
         // Should not happen, but default state
         @"SEGEventTypeUndefined",
         // Core Tracking Methods
@@ -247,10 +295,8 @@
         @"SEGEventTypeContinueUserActivity",
         @"SEGEventTypeOpenURL"
      ];
-    
+
     return eventArr[type];
 }
 
-
 @end
-
