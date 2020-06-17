@@ -83,9 +83,10 @@
         // Always log the segment event with INFO level to FullStory dev tools
         [FS logWithLevel:FSLOG_INFO format:@"Segment event type: %@", [self getEventName:ctx.eventType]];
         
-        // Only override the ctx.payload if:
-        // - is Track or Screen event
-        // - enabled FS session URL as part of the track/screen event properties
+        // Only override the ctx.payload to insert the current FullStory session URL if:
+        // - it is Track or Screen event
+        // - enableFSSessionURLInEvents is YES to enable FS session URL as part of the track/screen event properties
+        // if enabled you will recieve at your destination events with FS URL added as part of the event properties
         if (self.enableFSSessionURLInEvents) {
             // Create local var: payload, is not nil only when the evnet is Track or Screen
             SEGPayload *payload = [self getNewPayloadWithFSURL:context];
@@ -135,7 +136,7 @@
     //TODO: Segment will crash and not allow props to have curcular dependency, but we should handle it here anyways
     
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
-    for(NSString *key in properties){
+    for (NSString *key in properties) {
         NSString *suffix = @"";
 
         // properties should always be a NSDictionary, but still check to make sure the value we get is an object
