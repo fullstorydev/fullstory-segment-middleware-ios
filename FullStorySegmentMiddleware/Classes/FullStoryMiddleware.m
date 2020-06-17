@@ -13,7 +13,7 @@
 
 @implementation FullStoryMiddleware
 
-- (id)initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents {
+- (id)initWithAllowlistEvents:(NSArray<NSString *> *)allowlistEvents {
      if (self = [super init]) {
          self.enableSendScreenAsEvents = false;
          self.enableGroupTraitsAsUserVars = false;
@@ -26,16 +26,16 @@
 }
 
 - (id)init{
-
     // Init with no allowlisted events
+
     return [self initWithAllowlistEvents:nil];
 }
 
 - (void)context:(SEGContext * _Nonnull)context next:(SEGMiddlewareNext _Nonnull)next {
-    next ([context modify:^(id<SEGMutableContext>  _Nonnull ctx) {
+    next([context modify:^(id<SEGMutableContext> _Nonnull ctx) {
         // TODO: add support for Options
         switch (ctx.eventType) {
-            case SEGEventTypeGroup:{
+            case SEGEventTypeGroup: {
                 SEGGroupPayload *payload = (SEGGroupPayload *) ctx.payload;
                 // Create mutable userVars and optionally add the group traits as userVars to be assoicated to the user in FullStory
                 NSMutableDictionary *userVars = [[NSMutableDictionary alloc] initWithObjectsAndKeys:payload.groupId,@"groupID", nil];
@@ -45,15 +45,15 @@
                 [FS setUserVars:userVars];
                 break;
             }
-            case SEGEventTypeIdentify:{
-                SEGIdentifyPayload *payload = (SEGIdentifyPayload *) ctx.payload;
+            case SEGEventTypeIdentify: {
+                SEGIdentifyPayload *payload = (SEGIdentifyPayload *)ctx.payload;
                 // Segment Identify event, identify the same userID and traits in FullStory
                 // if displayName is not set, by default, user email is the displayName
                 [FS identify: payload.userId userVars:payload.traits];
                 break;
             }
-            case SEGEventTypeScreen:{
-                SEGScreenPayload *payload = (SEGScreenPayload *) ctx.payload;
+            case SEGEventTypeScreen: {
+                SEGScreenPayload *payload = (SEGScreenPayload *)ctx.payload;
                 // Segment Screen event, optionally enabled and send as custom events into FullStory
                 if (self.enableSendScreenAsEvents) {
                     NSString *name = [[NSString alloc] initWithFormat:@"Segment Screen: %@",payload.name];
@@ -61,8 +61,8 @@
                 }
                 break;
             }
-            case SEGEventTypeTrack:{
-                SEGTrackPayload *payload = (SEGTrackPayload *) ctx.payload;
+            case SEGEventTypeTrack: {
+                SEGTrackPayload *payload = (SEGTrackPayload *)ctx.payload;
 
                 // transform props to comply with FS custome events requriement
                 NSDictionary *props = [self getSuffixedProps:payload.properties];
@@ -72,12 +72,12 @@
                 }
                 break;
             }
-            case SEGEventTypeReset:{
+            case SEGEventTypeReset: {
                 // Segment Reset, usually called when user logs out, so anonymize the user in FullStory
                 [FS anonymize];
                 break;
             }
-            default:{}
+            default: break;
         }
         
         // Always log the segment event with INFO level to FullStory dev tools
@@ -94,11 +94,11 @@
     }]);
 }
 
-- (SEGPayload *) getNewPayloadWithFSURL:(SEGContext * _Nonnull)context {
+- (SEGPayload *)getNewPayloadWithFSURL:(SEGContext * _Nonnull)context {
     // Return not nil when we find Track and Screen event, and insert FS session URL into event properties
     SEGPayload *newPayload = nil;
     switch (context.eventType) {
-        case SEGEventTypeTrack:{
+        case SEGEventTypeTrack: {
             SEGTrackPayload *trackPayload = (SEGTrackPayload *) context.payload;
             NSMutableDictionary *newProps = [[NSMutableDictionary alloc] initWithDictionary:trackPayload.properties];
             [newProps setValue:[FS currentSessionURL] forKey:@"FSSessionURL"];
@@ -110,7 +110,7 @@
                                            integrations:trackPayload.integrations];
             break;
         }
-        case SEGEventTypeScreen:{
+        case SEGEventTypeScreen: {
             SEGScreenPayload *screenPayload = (SEGScreenPayload *) context.payload;
             NSMutableDictionary *newProps = [[NSMutableDictionary alloc] initWithDictionary:screenPayload.properties];
             [newProps setValue:[FS currentSessionURL] forKey:@"FSSessionURL"];
@@ -131,7 +131,7 @@
 }
 
 
-- (NSDictionary *) getSuffixedProps: (NSDictionary *)properties {
+- (NSDictionary *)getSuffixedProps:(NSDictionary *)properties {
     //TODO: Segment will crash and not allow props to have curcular dependency, but we should handle it here anyways
     
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
@@ -144,7 +144,6 @@
 
         if ([@"@" isEqualToString:@(typeCode)]) {
             NSObject *obj = properties[key];
-            
             // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we simply remove underscores
             // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
             if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -172,7 +171,7 @@
     return props;
 }
 
-- (NSString *) getSuffixStringFromSimpleObject:(NSObject *) obj {
+- (NSString *)getSuffixStringFromSimpleObject:(NSObject *)obj {
     // default to no suffix;
     NSString * suffix = @"";
     if ([obj isKindOfClass:[NSNumber class]]) {
@@ -195,7 +194,7 @@
     return suffix;
 }
 
-- (NSDictionary *) getDictionaryFromArrayObject:(NSArray *) arr withKey:(NSString *) key {
+- (NSDictionary *)getDictionaryFromArrayObject:(NSArray *)arr withKey:(NSString *)key {
     // FS does not accept array of dicts, only "premitive" arrays allowed
     // So if it's an array of dicts or nested arrays, then we need to convert the root array to a dict so it becomes nested dicts
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -225,7 +224,7 @@
     return dict;
 }
 
--(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andDictionary:(NSDictionary *) dict2 {
+- (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andDictionary:(NSDictionary *)dict2 {
     // when adding a parsed dict into the result dict, emurate and add each object
     for (NSString *k in dict2) {
         NSString *nestedKey;
@@ -238,14 +237,14 @@
     }
 }
 
--(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andArray:(NSArray *) arr {
+- (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andArray:(NSArray *)arr {
     // when adding a parsed array into the result dict, emurate and add each object
     for (id obj in (NSArray *)arr) {
         [self appendToDictionary:dict withKey:key andValue:obj];
     }
 }
 
--(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andSimpleObject:(NSObject *) obj {
+- (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andSimpleObject:(NSObject *)obj {
     // obj is simple, add it into the result dict, check if the key with suffix already exsist, if so then we need to append to the result arrays insead of replacing the object.
     // this creates a mutable array each time an object is added, maybe we should consider making arrays mutable in the dict
     // key is already suffixed, we just need to check if it ends with 's' to know if it's plural
@@ -256,14 +255,18 @@
     // if there is already a key in singular or plural form in the dict, remove exsisting key and concatnating all values and add a new plural key (flatten the arrays)
     if (isPlural) {
         NSMutableArray *arr = [[NSMutableArray alloc] initWithArray: dict[key]];
-        if(dict[singularKey] != nil) { [arr addObject:dict[singularKey]]; }
+        if (dict[singularKey] != nil) {
+            [arr addObject:dict[singularKey]];
+        }
         [arr addObject:obj];
         [dict removeObjectForKey:singularKey];
         [dict setObject:arr forKey:key];
     } else if (dict[key] || dict[pluralKey] ) {
         // if key exist but not plural
         NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:obj, dict[key], nil];
-        if(dict[pluralKey] != nil) { [arr addObjectsFromArray:dict[pluralKey]]; }
+        if (dict[pluralKey] != nil) {
+            [arr addObjectsFromArray:dict[pluralKey]];
+        }
         [dict removeObjectForKey:key];
         [dict setObject:arr forKey:pluralKey];
     } else {
@@ -271,7 +274,7 @@
     }
 }
 
--(void) appendToDictionary:(NSMutableDictionary *) dict withKey:(NSString *) key andValue:(NSObject *) obj {
+- (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andValue:(NSObject *)obj {
     // umbrella function to handle 3 possible object input, if not a dict or array then we will treat the object as "simple"
     if ([obj isKindOfClass:[NSArray class]]) {
         [self appendToDictionary:dict withKey:key andArray:(NSArray *)obj];
@@ -283,7 +286,7 @@
 }
 
 // get all possible events from Event integer enum: https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/#usage
-- (NSString *) getEventName:(SEGEventType)type {
+- (NSString *)getEventName:(SEGEventType)type {
     NSArray *eventArr = @[
         // Should not happen, but default state
         @"SEGEventTypeUndefined",
