@@ -161,7 +161,7 @@
                 suffix = [self getSuffixStringFromSimpleObject:obj];
                 [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andValue:properties[key]];
             }
-        }else{
+        } else {
             #ifdef DEBUG
                 NSAssert(FALSE, @"key `%@` is not an object can't be serialized for FS custom event.", key);
             #else
@@ -182,7 +182,7 @@
         suffix = @"_real";
         NSNumber *n = (NSNumber *) obj;
         const char *type = n.objCType;
-        if([@"i" isEqualToString:@(type)]) {
+        if ([@"i" isEqualToString:@(type)]) {
             suffix = @"_int";
         } else if ([@"B" isEqualToString:@(type)]) {
             // bool-type gets encoded as number number, and doesn't get encoded into 'B', but check anyway
@@ -240,7 +240,7 @@
             [arr addObjectsFromArray:dict2[key]];
             [dict removeObjectForKey:key];
             [dict setObject:arr forKey:key];
-        } else if(dict[key] != nil) {
+        } else if (dict[key] != nil) {
             // if the current value is not an array already, then delete it and upgrade it to array
             NSArray *arr = [[NSArray alloc]initWithObjects:dict[key], dict2[key], nil];
             [dict removeObjectForKey:key];
@@ -255,7 +255,7 @@
     // when adding a parsed array into the result dict, check if the key with suffix already exsist, if so then we need to append to the result arrays insead of replacing the object.
     if (dict[key] != nil && [dict[key] isKindOfClass:[NSArray class]]) {
         [dict[key] addObject:obj];
-    } else if(dict[key] != nil) {
+    } else if (dict[key] != nil) {
         // if the current value is not an array already, then delete it and upgrade it to array
         NSArray *arr = [[NSArray alloc]initWithObjects:dict[key], obj, nil];
         NSString *suffixedKey = [key stringByAppendingString:@"s"];
