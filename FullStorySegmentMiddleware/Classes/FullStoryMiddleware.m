@@ -66,6 +66,7 @@
 
                 // transform props to comply with FS custome events requriement
                 NSDictionary *props = [self getSuffixedProps:payload.properties];
+                NSLog(@"%@",props);
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
                 if (self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]) {
                     [FS event:payload.event properties:props];
@@ -196,7 +197,7 @@
 }
 
 - (NSDictionary *)getDictionaryFromArrayObject:(NSArray *)arr withKey:(NSString *)key {
-    // FS does not accept array of dicts, only "premitive" arrays allowed
+    // FS does not accept array of dicts, only "primitive" arrays allowed
     // So if it's an array of dicts or nested arrays, then we need to convert the root array to a dict so it becomes nested dicts
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
