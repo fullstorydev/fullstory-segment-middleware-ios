@@ -64,7 +64,7 @@
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *)ctx.payload;
 
-                // transform props to comply with FS custome events requriement
+                // transform props to comply with FS custom events requirement
                 NSDictionary *props = [self getSuffixedProps:payload.properties];
                 NSLog(@"%@",props);
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
@@ -133,7 +133,41 @@
 }
 
 
+// restructure the properties input comply with FS data requirements
+// Sample input:
+// @{ @"item_name": @"Sword of Heracles",
+//    @"revenue": @2.95,
+//    @"features": @[@"Slay the Nemean Lion", @"Slay the nine-headed Lernaean Hydra."],
+//    @"products": @[
+//              @{@"product_id": @"productid_1",@"price": @1.11},
+//              @{@"product_id": @"productid_2",@"price": @2.22}
+//      ],
+//    @"mixed_array": @[@2,@4,@3.5,@"testmix",@[@"arr1", @"arr2"],@{@"objkey":@"objVal"},@4.5,@[@"arr3", @"arr4"]],
+//    @"int_array":@[@2,@4,@5,@10],
+//    @"bool_test": @true,
+//    @"nestedobjs_test":@{@"nestedkey":@"nestedval"},
+//    @"coupons_test":@[@{@"discount":@10.5},@{@"freeshipping":@true}]
+// }
+// Sample output:
+// @{ @"item_name_str": @"Sword of Heracles",
+//    @"revenue_real": @2.95,
+//    @"features_strs": @[@"Slay the Nemean Lion", @"Slay the nine-headed Lernaean Hydra."],
+//    @"products.product_id_strs": @[@"Sproductid_2", @"productid_1"],
+//    @"products.price_reals": @[@2.22, @1.11],
+//    @"mixedArr.objkey_str": @"objVal"
+//    @"mixedArr_ints":@[@2,@4]
+//    @"mixedArr_reals": @[@3.5, @4.5]
+//    @"mixedArr_strs": @[@"testmix", @"arr1", @"arr2", @"arr3", @"arr4"]
+//    @"int_array_ints":@[@2,@4,@5,@10],
+//    @"bool_test_int": @1,
+//    @"nestedobjs_test":@{@"nestedkey":@"nestedval"},
+//    @"coupons_test.price_real": @10.5,
+//    @"coupons_test.freeshipping_int": @1
+// }
+
+
 - (NSDictionary *)getSuffixedProps:(NSDictionary *)properties {
+    // transform props to comply with FS custom events requirement
     //TODO: Segment will crash and not allow props to have curcular dependency, but we should handle it here anyways
     
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
@@ -141,10 +175,11 @@
         NSString *suffix = @"";
 
         // properties should always be a NSDictionary, but still check to make sure the value we get is an object
-        // Check Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-        const char* typeCode = @encode(typeof(props[key]));
+        // where '@' represents an Object
+        // Type Encoding: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+        const char* typeCode = @encode(typeof(properties[key]));
 
-        if ([@"@" isEqualToString:@(typeCode)]) {
+        if (*typeCode == '@') {
             NSObject *obj = properties[key];
             // if it's a NSDictionary: recurrsively get props, and we can not take underscore in key for nested objects, so we simply remove underscores
             // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
@@ -153,19 +188,20 @@
                          forKey:[key stringByReplacingOccurrencesOfString:@"_" withString:@""]];
             } else if ([obj isKindOfClass:[NSArray class]]) {
                 NSArray *arr = (NSArray *) obj;
+                // Flatten the array of objects into a dictionary: with each key being an array which holds the values from each object for that key
                 NSDictionary *dict = [self getDictionaryFromArrayObject:arr withKey:key];
                 [self appendToDictionary:props withKey:@"" andValue:dict];
             } else {
-                // if this is not a dictionary or array, then treat it like simple values, if data falls outside of these, we don't try to infer anything and just send as is to the server
+                // not a dictionary or array, don't try to infer anything and just send as is to the server
                 suffix = [self getSuffixStringFromSimpleObject:obj];
-                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andValue:properties[key]];
+                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andValue:obj];
             }
         } else {
             #ifdef DEBUG
                 NSAssert(FALSE, @"key `%@` is not an object can't be serialized for FS custom event.", key);
             #else
                 NSLog(@"key `%@` is not an object can't be serialized for FS custom event.", key);
-                // if prod, then ignore this pops all together
+                // if prod, then ignore this property all together
             #endif
         }
     }
@@ -180,10 +216,10 @@
         // defaut to real
         suffix = @"_real";
         NSNumber *n = (NSNumber *) obj;
-        const char *type = n.objCType;
-        if ([@"i" isEqualToString:@(type)]) {
+        const char *typeCode = n.objCType;
+        if (*typeCode == 'i') {
             suffix = @"_int";
-        } else if ([@"B" isEqualToString:@(type)]) {
+        } else if (*typeCode == 'B') {
             // bool-type gets encoded as number number, and doesn't get encoded into 'B', but check anyway
             suffix = @"_bool";
         }
@@ -197,15 +233,16 @@
 }
 
 - (NSDictionary *)getDictionaryFromArrayObject:(NSArray *)arr withKey:(NSString *)key {
-    // FS does not accept array of dicts, only "primitive" arrays allowed
-    // So if it's an array of dicts or nested arrays, then we need to convert the root array to a dict so it becomes nested dicts
+    // To comply with FS requirements, does not accept array of dicts, only "primitive" arrays allowed
+    // Convert the root array into a dict, flatten the array, with each possible key from all objects becoming an array of values.
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
     for (int i = 0; i < [arr count]; i++) {
         NSObject *item = arr[i];
 
         if ([item isKindOfClass:[NSDictionary class]]) {
-            // if array of dicts, we then loop through all dicts, flatten out each key/val into arrays, we will loose the object association but it allows user to search for each key/val in the array in FS (i.e. searching for one product when array of products are sent)
+            // Loop through all dicts, flatten out each key/val into arrays,
+            // Allows user to search for each key/val in the array in FS (i.e. searching for one product when array of products are sent)
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getSuffixedProps:(NSDictionary *) item]];
             [self appendToDictionary:dict withKey:key andValue:tempDict];
         } else if ([item isKindOfClass:[NSArray class]]) {
@@ -213,8 +250,7 @@
             NSDictionary *tempDict = [self getDictionaryFromArrayObject:(NSArray *)item withKey:key];
             [self appendToDictionary:dict withKey:@"" andValue:tempDict];
         } else {
-            // default to simple object
-            // if there are arrays of mixed type, then in the final props we will add approporate values to the same, key but with each type suffix
+            // default to simple object and parse for suffix
             NSString* suffix = [[self getSuffixStringFromSimpleObject:item] stringByAppendingString:@"s"];
             // get the current array form this specified suffix, if any, then append current item
             NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:[dict valueForKey:[key stringByAppendingString:suffix]]];
@@ -227,7 +263,7 @@
 }
 
 - (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andDictionary:(NSDictionary *)dict2 {
-    // when adding a parsed dict into the result dict, emurate and add each object
+    // when adding a parsed dict into the result dict, enumerate and add each object
     for (NSString *k in dict2) {
         NSString *nestedKey;
         if ([key length] > 0) {
@@ -240,22 +276,22 @@
 }
 
 - (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andArray:(NSArray *)arr {
-    // when adding a parsed array into the result dict, emurate and add each object
+    // when adding a parsed array into the result dict, enumerate and add each object
     for (id obj in (NSArray *)arr) {
         [self appendToDictionary:dict withKey:key andValue:obj];
     }
 }
 
 - (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andSimpleObject:(NSObject *)obj {
-    // obj is simple, add it into the result dict, check if the key with suffix already exsist, if so then we need to append to the result arrays insead of replacing the object.
-    // this creates a mutable array each time an object is added, maybe we should consider making arrays mutable in the dict
+    // add one obj into the result dict, check if the key with suffix already exsist, if so append to the result arrays.
     // key is already suffixed, we just need to check if it ends with 's' to know if it's plural
+    // TODO: un-rely on suffix check to determin if it's already an array or not
     bool isPlural = [key hasSuffix:@"s"];
     NSString *pluralKey = [key stringByAppendingString:@"s"];
-    NSString *singularKey = [key substringToIndex:[key length] - 1];
-    
-    // if there is already a key in singular or plural form in the dict, remove exsisting key and concatnating all values and add a new plural key (flatten the arrays)
+
+    // dict contain either singular or plural form, remove exsisting key, concatnating all values, and add a new key as plural (flatten the array)
     if (isPlural) {
+        NSString *singularKey = [key substringToIndex:[key length] - 1];
         NSMutableArray *arr = [[NSMutableArray alloc] initWithArray: dict[key]];
         if (dict[singularKey] != nil) {
             [arr addObject:dict[singularKey]];
