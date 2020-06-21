@@ -23,25 +23,23 @@
          self.allowlistAllTrackEvents = false;
          self.allowlistEvents = [[NSMutableArray alloc] initWithArray:allowlistEvents];
      }
-
     return self;
 }
 
 - (id)init{
     // Init with no allowlisted events
-
     return [self initWithAllowlistEvents:nil];
 }
 
 - (void)context:(SEGContext * _Nonnull)context next:(SEGMiddlewareNext _Nonnull)next {
     next([context modify:^(id<SEGMutableContext> _Nonnull ctx) {
-        // TODO: add support for Options
+        // TODO: added support for Options
         switch (ctx.eventType) {
             case SEGEventTypeGroup: {
                 SEGGroupPayload *payload = (SEGGroupPayload *) ctx.payload;
                 // Create mutable userVars and optionally add the group traits as userVars to be assoicated to the user in FullStory
                 NSMutableDictionary *userVars = [[NSMutableDictionary alloc] initWithObjectsAndKeys:payload.groupId,@"groupID", nil];
-                if(self.enableGroupTraitsAsUserVars){
+                if (self.enableGroupTraitsAsUserVars) {
                     [userVars addEntriesFromDictionary:payload.traits];
                 }
                 [FS setUserVars:userVars];
@@ -106,7 +104,7 @@
             SEGTrackPayload *trackPayload = (SEGTrackPayload *) context.payload;
             NSMutableDictionary *newProps = [[NSMutableDictionary alloc] initWithDictionary:trackPayload.properties];
             [newProps setValue:[FS currentSessionURL] forKey:@"FSSessionURL"];
-            
+
             newPayload = [[SEGTrackPayload alloc]
                                            initWithEvent:trackPayload.event
                                            properties:newProps
@@ -118,7 +116,7 @@
             SEGScreenPayload *screenPayload = (SEGScreenPayload *) context.payload;
             NSMutableDictionary *newProps = [[NSMutableDictionary alloc] initWithDictionary:screenPayload.properties];
             [newProps setValue:[FS currentSessionURL] forKey:@"FSSessionURL"];
-            
+
             newPayload = [[SEGScreenPayload alloc]
                                            initWithName:screenPayload.name
                                            properties:screenPayload.properties
@@ -130,10 +128,8 @@
             newPayload = nil;
             break;
     }
-
     return newPayload;
 }
-
 
 // restructure the properties input comply with FS data requirements
 // Sample input:
@@ -185,12 +181,12 @@
                     NSString *concatnatedKey = [key stringByAppendingFormat:@".%@",k];
                     [stack addObject:@{concatnatedKey:obj[key][k]}];
                 }
-            } else if ([obj[key] isKindOfClass:[NSArray class]]){
+            } else if ([obj[key] isKindOfClass:[NSArray class]]) {
                 // To comply with FS requirements, flatten the array of objects into a dictionary:
                 // each item in array becomes dictionary, with this key, and item as value
                 // enabled search value the array in FS (i.e. searching for one product when array of products are sent)
                 // then push each item with the same key back to stack
-                for (id item in obj[key]){
+                for (id item in obj[key]) {
                     [stack addObject:@{key:item}];
                 }
             } else {
@@ -225,7 +221,6 @@
         // TODO: parse date string properly
         suffix = @"_str";
     }
-
     return suffix;
 }
 
@@ -236,7 +231,7 @@
         // if the same key already exist, check if plural key's already in dict
         // concatinate array and replace in dict
         NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:obj, nil];
-        if([dict[key] isKindOfClass:[NSArray class]]) {
+        if ([dict[key] isKindOfClass:[NSArray class]]) {
             [arr addObjectsFromArray:dict[key]];
         } else {
             [arr addObject:dict[key]];
@@ -249,8 +244,8 @@
 
 - (void)pluralizeAllArrayKeysInDictionary:(NSMutableDictionary *)dict {
     NSArray *keys = dict.allKeys;
-    for (NSString *key in keys){
-        if([dict[key] isKindOfClass:[NSArray class]]) {
+    for (NSString *key in keys) {
+        if ([dict[key] isKindOfClass:[NSArray class]]) {
             // all keys should be suffixed and singular
             [dict setValue:dict[key] forKey:[key stringByAppendingString:@"s"]];
             [dict removeObjectForKey:key];
