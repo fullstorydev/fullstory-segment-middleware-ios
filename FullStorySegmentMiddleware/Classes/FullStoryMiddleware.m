@@ -126,35 +126,7 @@
 
 // get all possible events from Event integer enum: https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/#usage
 - (NSString *) getEventName:(SEGEventType)type {
-    NSArray *eventArr =@[
-        // Should not happen, but default state
-        @"SEGEventTypeUndefined",
-        // Core Tracking Methods
-        @"SEGEventTypeIdentify",
-        @"SEGEventTypeTrack",
-        @"SEGEventTypeScreen",
-        @"SEGEventTypeGroup",
-        @"SEGEventTypeAlias",
-
-        // General utility
-        @"SEGEventTypeReset",
-        @"SEGEventTypeFlush",
-
-        // Remote Notification
-        @"SEGEventTypeReceivedRemoteNotification",
-        @"SEGEventTypeFailedToRegisterForRemoteNotifications",
-        @"SEGEventTypeRegisteredForRemoteNotifications",
-        @"SEGEventTypeHandleActionWithForRemoteNotification",
-
-        // Application Lifecycle
-        @"SEGEventTypeApplicationLifecycle",
-
-        // Misc.
-        @"SEGEventTypeContinueUserActivity",
-        @"SEGEventTypeOpenURL"
-     ];
-    
-    return eventArr[type];
+    return Constants.segmentEventsArray[type];
 }
 
 
