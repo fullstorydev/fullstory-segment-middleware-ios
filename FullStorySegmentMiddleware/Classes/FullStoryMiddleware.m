@@ -10,8 +10,6 @@
 #import <Analytics/SEGMiddleware.h>
 #import <FullStory/FullStory.h>
 #import "FullStoryMiddleware.h"
-#import "Constants.h"
-
 
 @implementation FullStoryMiddleware
 
