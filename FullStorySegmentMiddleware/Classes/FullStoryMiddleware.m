@@ -172,27 +172,27 @@
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
     NSMutableArray *stack = [[NSMutableArray alloc] initWithObjects:properties, nil];
     while (stack.count > 0) {
-        NSDictionary *obj = [stack objectAtIndex:(stack.count - 1)];
-        [stack removeObject:obj];
-        for (NSString *key in obj) {
-            if ([obj[key] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = [stack objectAtIndex:(stack.count - 1)];
+        [stack removeObject:dict];
+        for (NSString *key in dict) {
+            if ([dict[key] isKindOfClass:[NSDictionary class]]) {
                 // nested dicts, concat keys and push back to stack
-                for (NSString *k in obj[key]){
-                    NSString *concatnatedKey = [key stringByAppendingFormat:@".%@",k];
-                    [stack addObject:@{concatnatedKey:obj[key][k]}];
+                for (NSString *k in dict[key]){
+                    NSString *concatenatedKey = [key stringByAppendingFormat:@".%@",k];
+                    [stack addObject:@{concatenatedKey:dict[key][k]}];
                 }
-            } else if ([obj[key] isKindOfClass:[NSArray class]]) {
+            } else if ([dict[key] isKindOfClass:[NSArray class]]) {
                 // To comply with FS requirements, flatten the array of objects into a dictionary:
-                // each item in array becomes dictionary, with this key, and item as value
-                // enabled search value the array in FS (i.e. searching for one product when array of products are sent)
+                // each item in array becomes a dictionary, with this key, and item as value
+                // enable search value the array in FS (i.e. searching for one product when array of products are sent)
                 // then push each item with the same key back to stack
-                for (id item in obj[key]) {
+                for (id item in dict[key]) {
                     [stack addObject:@{key:item}];
                 }
             } else {
                 // not dict nor array, simply treat as a "primitive" value and send them as-is
-                NSString *suffix = [self getSuffixStringFromSimpleObject:obj[key]];
-                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andSimpleObject:obj[key]];
+                NSString *suffix = [self getSuffixStringFromSimpleObject:dict[key]];
+                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andSimpleObject:dict[key]];
             }
         }
 
@@ -225,11 +225,11 @@
 }
 
 - (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andSimpleObject:(NSObject *)obj {
-    // add one obj into the result dict, check if the key with suffix already exsist, if so append to the result arrays.
+    // add one obj into the result dict, check if the key with suffix already exists, if so append to the result arrays.
     // key is already suffixed and always singular form
     if (dict[key] != nil) {
-        // if the same key already exist, check if plural key's already in dict
-        // concatinate array and replace in dict
+        // if the same key already exist, check if plural key is already in the dict
+        // concatenate array and replace
         NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:obj, nil];
         if ([dict[key] isKindOfClass:[NSArray class]]) {
             [arr addObjectsFromArray:dict[key]];
@@ -254,7 +254,34 @@
 }
 
 - (NSString *)getEventName:(SEGEventType)type {
-    return Constants.segmentEventsArray[type];
+    NSArray *eventArr =@[
+        // Should not happen, but default state
+        @"SEGEventTypeUndefined",
+        // Core Tracking Methods
+        @"SEGEventTypeIdentify",
+        @"SEGEventTypeTrack",
+        @"SEGEventTypeScreen",
+        @"SEGEventTypeGroup",
+        @"SEGEventTypeAlias",
+
+        // General utility
+        @"SEGEventTypeReset",
+        @"SEGEventTypeFlush",
+
+        // Remote Notification
+        @"SEGEventTypeReceivedRemoteNotification",
+        @"SEGEventTypeFailedToRegisterForRemoteNotifications",
+        @"SEGEventTypeRegisteredForRemoteNotifications",
+        @"SEGEventTypeHandleActionWithForRemoteNotification",
+
+        // Application Lifecycle
+        @"SEGEventTypeApplicationLifecycle",
+
+        // Misc.
+        @"SEGEventTypeContinueUserActivity",
+        @"SEGEventTypeOpenURL"
+     ];
+    return eventArr[type];
 }
 
 @end
