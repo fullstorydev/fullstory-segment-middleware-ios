@@ -6,6 +6,9 @@
 //  Copyright © 2020 FullStory All rights reserved.
 //
 
+#ifndef FullStoryMiddleware_h
+#define FullStoryMiddleware_h
+
 #import <Foundation/Foundation.h>
 #import <Analytics/SEGMiddleware.h>
 
@@ -20,3 +23,5 @@
 - (id) initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
 
 @end
+
+#endif /* FullStoryMiddleware_h */

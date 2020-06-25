@@ -10,6 +10,7 @@
 #import <Analytics/SEGMiddleware.h>
 #import <FullStory/FullStory.h>
 #import "FullStoryMiddleware.h"
+#import "DictionaryHelper.h"
 
 @implementation FullStoryMiddleware
 
@@ -31,7 +32,7 @@
 
 - (void)context:(SEGContext * _Nonnull)context next:(SEGMiddlewareNext _Nonnull)next {
     next([context modify:^(id<SEGMutableContext> _Nonnull ctx) {
-        // TODO: added support for Options
+        // TODO: add support for Options
         switch (ctx.eventType) {
             case SEGEventTypeGroup: {
                 SEGGroupPayload *payload = (SEGGroupPayload *) ctx.payload;
@@ -168,6 +169,7 @@
     //TODO: Segment will crash and not allow props to have curcular dependency/nested or mixed arrays, but we should handle it here anyways
     
     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
+    // Depth first search to iterate through nested properties
     NSMutableArray *stack = [[NSMutableArray alloc] initWithObjects:properties, nil];
     while (stack.count > 0) {
         NSDictionary *dict = [stack objectAtIndex:(stack.count - 1)];
@@ -190,12 +192,12 @@
             } else {
                 // not dict nor array, simply treat as a "primitive" value and send them as-is
                 NSString *suffix = [self getSuffixStringFromSimpleObject:dict[key]];
-                [self appendToDictionary:props withKey:[key stringByAppendingString:suffix] andSimpleObject:dict[key]];
+                [DictionaryHelper appendToDictionary:props withKey:[key stringByAppendingString:suffix] andSimpleObject:dict[key]];
             }
         }
 
     }
-    [self pluralizeAllArrayKeysInDictionary:props];
+    [DictionaryHelper pluralizeAllArrayKeysInDictionary:props];
     return props;
 }
 
@@ -220,35 +222,6 @@
         suffix = @"_str";
     }
     return suffix;
-}
-
-- (void)appendToDictionary:(NSMutableDictionary *)dict withKey:(NSString *)key andSimpleObject:(NSObject *)obj {
-    // add one obj into the result dict, check if the key with suffix already exists, if so append to the result arrays.
-    // key is already suffixed and always singular form
-    if (dict[key] != nil) {
-        // if the same key already exist, check if plural key is already in the dict
-        // concatenate array and replace
-        NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:obj, nil];
-        if ([dict[key] isKindOfClass:[NSArray class]]) {
-            [arr addObjectsFromArray:dict[key]];
-        } else {
-            [arr addObject:dict[key]];
-        }
-        [dict setObject:arr forKey:key];
-    } else {
-        [dict setObject:obj forKey:key];
-    }
-}
-
-- (void)pluralizeAllArrayKeysInDictionary:(NSMutableDictionary *)dict {
-    NSArray *keys = dict.allKeys;
-    for (NSString *key in keys) {
-        if ([dict[key] isKindOfClass:[NSArray class]]) {
-            // all keys should be suffixed and singular
-            [dict setValue:dict[key] forKey:[key stringByAppendingString:@"s"]];
-            [dict removeObjectForKey:key];
-        }
-    }
 }
 
 - (NSString *)getEventName:(SEGEventType)type {
