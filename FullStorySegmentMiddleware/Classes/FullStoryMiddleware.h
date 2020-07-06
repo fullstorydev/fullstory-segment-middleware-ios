@@ -20,7 +20,7 @@
 @property (nonatomic) BOOL enableFSSessionURLInEvents;
 @property (nonatomic) BOOL allowlistAllTrackEvents;
 
-- (id) initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
+- (id)initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
 
 @end
 

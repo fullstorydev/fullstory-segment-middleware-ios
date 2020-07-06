@@ -10,7 +10,7 @@
 #import <Analytics/SEGMiddleware.h>
 #import <FullStory/FullStory.h>
 #import "FullStoryMiddleware.h"
-#import "DictionaryHelper.h"
+#import "FSSuffixedProperties.h"
 
 @implementation FullStoryMiddleware
 
@@ -64,11 +64,11 @@
                 SEGTrackPayload *payload = (SEGTrackPayload *)ctx.payload;
 
                 // transform props to comply with FS custom events requirement
-                NSDictionary *props = [self getSuffixedProps:payload.properties];
-                NSLog(@"%@",props);
+                FSSuffixedProperties *fsProps = [[FSSuffixedProperties alloc] initWithProperties:payload.properties];
+
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
                 if (self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]) {
-                    [FS event:payload.event properties:props];
+                    [FS event:payload.event properties:fsProps.suffixedProperties];
                 }
                 break;
             }
@@ -128,100 +128,6 @@
             break;
     }
     return newPayload;
-}
-
-// restructure the properties input comply with FS data requirements
-// Sample input:
-// @{ @"item_name": @"Sword of Heracles",
-//    @"revenue": @2.95,
-//    @"features": @[@"Slay the Nemean Lion", @"Slay the nine-headed Lernaean Hydra."],
-//    @"products": @[
-//              @{@"product_id": @"productid_1",@"price": @1.11},
-//              @{@"product_id": @"productid_2",@"price": @2.22}
-//      ],
-//    @"mixed_array": @[@2,@4,@3.5,@"testmix",@[@"arr1", @"arr2"],@{@"objkey":@"objVal"},@4.5,@[@"arr3", @"arr4"]],
-//    @"int_array":@[@2,@4,@5,@10],
-//    @"bool_test": @true,
-//    @"nestedobjs_test":@{@"nestedkey":@"nestedval"},
-//    @"coupons_test":@[@{@"discount":@10.5},@{@"freeshipping":@true}]
-// }
-// Sample output:
-// @{ @"item_name_str": @"Sword of Heracles",
-//    @"revenue_real": @2.95,
-//    @"features_strs": @[@"Slay the Nemean Lion", @"Slay the nine-headed Lernaean Hydra."],
-//    @"products.product_id_strs": @[@"Sproductid_2", @"productid_1"],
-//    @"products.price_reals": @[@2.22, @1.11],
-//    @"mixedArr.objkey_str": @"objVal"
-//    @"mixedArr_ints":@[@2,@4]
-//    @"mixedArr_reals": @[@3.5, @4.5]
-//    @"mixedArr_strs": @[@"testmix", @"arr1", @"arr2", @"arr3", @"arr4"]
-//    @"int_array_ints":@[@2,@4,@5,@10],
-//    @"bool_test_int": @1,
-//    @"nestedobjs_test":@{@"nestedkey":@"nestedval"},
-//    @"coupons_test.price_real": @10.5,
-//    @"coupons_test.freeshipping_int": @1
-// }
-
-
-- (NSDictionary *)getSuffixedProps:(NSDictionary *)properties {
-    // transform props to comply with FS custom events requirement
-    // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
-    //TODO: Segment will crash and not allow props to have curcular dependency/nested or mixed arrays, but we should handle it here anyways
-    
-    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
-    // Depth first search to iterate through nested properties
-    NSMutableArray *stack = [[NSMutableArray alloc] initWithObjects:properties, nil];
-    while (stack.count > 0) {
-        NSDictionary *dict = [stack objectAtIndex:(stack.count - 1)];
-        [stack removeObject:dict];
-        for (NSString *key in dict) {
-            if ([dict[key] isKindOfClass:[NSDictionary class]]) {
-                // nested dicts, concat keys and push back to stack
-                for (NSString *k in dict[key]){
-                    NSString *concatenatedKey = [key stringByAppendingFormat:@".%@",k];
-                    [stack addObject:@{concatenatedKey:dict[key][k]}];
-                }
-            } else if ([dict[key] isKindOfClass:[NSArray class]]) {
-                // To comply with FS requirements, flatten the array of objects into a dictionary:
-                // each item in array becomes a dictionary, with this key, and item as value
-                // enable search value the array in FS (i.e. searching for one product when array of products are sent)
-                // then push each item with the same key back to stack
-                for (id item in dict[key]) {
-                    [stack addObject:@{key:item}];
-                }
-            } else {
-                // not dict nor array, simply treat as a "primitive" value and send them as-is
-                NSString *suffix = [self getSuffixStringFromSimpleObject:dict[key]];
-                [DictionaryHelper appendToDictionary:props withKey:[key stringByAppendingString:suffix] andSimpleObject:dict[key]];
-            }
-        }
-
-    }
-    [DictionaryHelper pluralizeAllArrayKeysInDictionary:props];
-    return props;
-}
-
-- (NSString *)getSuffixStringFromSimpleObject:(NSObject *)obj {
-    // default to no suffix;
-    NSString * suffix = @"";
-    if ([obj isKindOfClass:[NSNumber class]]) {
-        // defaut to real
-        suffix = @"_real";
-        NSNumber *n = (NSNumber *) obj;
-        const char *typeCode = n.objCType;
-        if (*typeCode == 'i') {
-            suffix = @"_int";
-        } else if (*typeCode == 'B') {
-            // bool-type gets encoded as number number, and doesn't get encoded into 'B', but check anyway
-            suffix = @"_bool";
-        }
-    } else if ([obj isKindOfClass:[NSDate class]]) {
-        suffix = @"_date";
-    } else if([obj isKindOfClass:[NSString class]]) {
-        // TODO: parse date string properly
-        suffix = @"_str";
-    }
-    return suffix;
 }
 
 - (NSString *)getEventName:(SEGEventType)type {
