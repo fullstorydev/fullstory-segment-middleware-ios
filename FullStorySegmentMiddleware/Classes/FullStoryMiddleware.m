@@ -62,12 +62,10 @@
             }
             case SEGEventTypeTrack: {
                 SEGTrackPayload *payload = (SEGTrackPayload *)ctx.payload;
-
-                // transform props to comply with FS custom events requirement
-                FSSuffixedProperties *fsProps = [[FSSuffixedProperties alloc] initWithProperties:payload.properties];
-
                 // Segment Track event, optionally enabled /w events allowlisted, send as custom events into FullStory
                 if (self.allowlistAllTrackEvents || [self.allowlistEvents containsObject:payload.event]) {
+                    // transform props to comply with FS custom events requirement
+                    FSSuffixedProperties *fsProps = [[FSSuffixedProperties alloc] initWithProperties:payload.properties];
                     [FS event:payload.event properties:fsProps.suffixedProperties];
                 }
                 break;

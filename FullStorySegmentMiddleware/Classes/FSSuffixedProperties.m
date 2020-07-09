@@ -51,39 +51,38 @@
 - (id)initWithProperties:(NSDictionary *)properties {
     // transform properties to comply with FS custom events requirement
     // more info: https://help.fullstory.com/hc/en-us/articles/360020623234-FS-Recording-Client-API-Requirements
-    // TODO: Segment will crash and not allow props to have curcular dependency/nested or mixed arrays, but we should handle it here anyways
+    // TODO: Segment does not allow props to have curcular dependency, but we should handle it anyways
 
     self.suffixedProperties = [[NSMutableDictionary alloc] init];
 
     // Depth first search to iterate through potentially nested properties
     NSMutableArray *stack = [[NSMutableArray alloc] initWithObjects:properties, nil];
     while (stack.count > 0) {
-        NSDictionary *dict = [stack objectAtIndex:(stack.count - 1)];
-        [stack removeObject:dict];
+        NSDictionary *dict = [stack lastObject];
+        [stack removeLastObject];
         for (NSString *key in dict) {
             if ([dict[key] isKindOfClass:[NSDictionary class]]) {
-                // nested dicts, concat keys and push back to stack
+                // nested dictionaries, concatenate keys and push back to stack
                 for (NSString *k in dict[key]){
                     NSString *concatenatedKey = [key stringByAppendingFormat:@".%@",k];
                     [stack addObject:@{concatenatedKey:dict[key][k]}];
                 }
             } else if ([dict[key] isKindOfClass:[NSArray class]]) {
-                // To comply with FS requirements, flatten the array of objects into a dictionary:
-                // each item in array becomes a dictionary, with the same key, and the item as value
-                // this enables searching value of array in FS (i.e. searching for one product when array of products are sent)
+                // To comply with FS requirements, flatten the array of objects into a flat dictionary:
+                // each item in array becomes a dictionary, with the same key, and the item itself as value
+                // this enables searching values in an array in FS (i.e. searching for one product when array of products are sent)
                 // then push each item with the same key back to stack
                 for (id item in dict[key]) {
                     [stack addObject:@{key:item}];
                 }
             } else {
-                // not dict nor array, simply treat as a "primitive" value and send them as-is
+                // not dictionary nor array, simply treat as a "primitive" value and send them as-is with suffix
                 NSString *suffix = [self getSuffixStringFromSimpleObject:dict[key]];
                 [self addSimpleObject:dict[key] withKey:[key stringByAppendingString:suffix]];
             }
         }
-
     }
-    // all keys are singular form when added to suffixedProperties
+    // all keys are singular form now in suffixedProperties
     // now pluralize keys (i.e. _str -> _strs) when appropriate
     [self pluralizeAllArrayKeys];
 
@@ -91,8 +90,8 @@
 }
 
 - (void)addSimpleObject:(NSObject *)obj withKey:(NSString *)key {
-    // add one obj into suffixedProperties, check if the key already exists, if so convert(or add) to value array.
-    // key is already suffixed and always in singular form
+    // add obj into suffixedProperties, check if the key already exists, if so convert(or add) to value array.
+    // input key is already suffixed and always in singular form
     // if the same key already exist, check if plural key is already in the dict
     if (self.suffixedProperties[key] != nil) {
         // concatenate array and replace
