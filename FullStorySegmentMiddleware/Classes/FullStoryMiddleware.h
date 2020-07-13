@@ -6,6 +6,9 @@
 //  Copyright © 2020 FullStory All rights reserved.
 //
 
+#ifndef FullStoryMiddleware_h
+#define FullStoryMiddleware_h
+
 #import <Foundation/Foundation.h>
 #import <Analytics/SEGMiddleware.h>
 
@@ -17,6 +20,8 @@
 @property (nonatomic) BOOL enableFSSessionURLInEvents;
 @property (nonatomic) BOOL allowlistAllTrackEvents;
 
-- (id) initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
+- (id)initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
 
 @end
+
+#endif /* FullStoryMiddleware_h */
