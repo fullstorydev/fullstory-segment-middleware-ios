@@ -6,6 +6,9 @@
 //  Copyright © 2020 FullStory. All rights reserved.
 //
 
+// SegmentSpecFakeData contains mock data for all events' properties, according to Segment ecommerce spec defined here:
+// https://segment.com/docs/connections/spec/ecommerce/v2/
+
 #import <Foundation/Foundation.h>
 #import "SegmentSpecFakeData.h"
 
