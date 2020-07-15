@@ -26,19 +26,13 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'FullStory' => 'https://www.fullstory.com' }
   s.source           = { :git => 'https://github.com/fullstorydev/fullstory-segment-middleware-ios.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+#  s.ios.deployment_target = '8.0'
 
-  s.source_files = 'FullStorySegmentMiddleware/Classes/**/*'
+  s.source_files = 'FullStorySegmentMiddleware/Classes/**/*.{h,m}'
   
-  # s.resource_bundles = {
-  #   'FullStorySegmentMiddleware' => ['FullStorySegmentMiddleware/Assets/*.png']
-  # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'FullStory'
   s.dependency 'Analytics'
 end

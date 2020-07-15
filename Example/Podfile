@@ -5,10 +5,9 @@ pod 'FullStory', :http => 'https://ios-releases.fullstory.com/fullstory-1.3.0.ta
 pod 'Analytics', '~> 3.0'
 
 target 'FullStorySegmentMiddleware_Example' do
-  pod 'FullStorySegmentMiddleware', :path => '../'
+  pod 'FullStorySegmentMiddleware', :path => '../' 
 
   target 'FullStorySegmentMiddleware_Tests' do
     inherit! :search_paths
-
   end
 end
