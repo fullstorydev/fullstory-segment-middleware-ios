@@ -12,9 +12,9 @@
 @implementation FSPropertiesFakeData
 
 + (NSDictionary*)ECommerceEventsProductsSearched {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:1];
-    dict[@"query_str"] = @"blue roses";
-    return dict;
+    return @{
+        @"query_str": @"blue roses"
+    };
 }
 
 + (NSDictionary*)ECommerceEventsProductListViewed {
@@ -26,7 +26,7 @@
 }
 
 + (NSDictionary*)ECommerceEventsProductListFiltered {
-    NSDictionary *dict = @{
+    return @{
         @"list_id_str": @"todays_deals_may_11_2019",
         @"filters.type_strs": @[@"department", @"price"],
         @"filters.value_strs": @[@"beauty", @"under-$25"],
@@ -41,29 +41,24 @@
         @"products.url_str": @"https://www.example.com/product/path",
         @"products.image_url_str": @"https://www.example.com/product/path.jpg",
     };
-
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsPromotionViewed {
-    NSDictionary *dict = @{
+    return @{
         @"promotion_id_str": @"promo_1",
         @"creative_str": @"top_banner_2",
         @"name_str": @"75% store-wide shoe sale",
         @"position_str": @"home_banner_top"
     };
-    return dict;
 }
 
-
 + (NSDictionary*)ECommerceEventsPromotionClicked {
-    NSDictionary *dict = @{
+    return @{
         @"promotion_id_str": @"promo_1",
         @"creative_str": @"top_banner_2",
         @"name_str": @"75% store-wide shoe sale",
         @"position_str": @"home_banner_top"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsProductClicked {
@@ -119,31 +114,28 @@
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutStepViewed {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id_str": @"50314b8e9bcf000000000000",
         @"step_int": @2,
         @"shipping_method_str": @"Fedex",
         @"payment_method_str": @"Visa",
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutStepCompleted {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id_str": @"50314b8e9bcf000000000000",
         @"step_int": @2,
         @"shipping_method_str": @"Fedex",
         @"payment_method_str": @"Visa",
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutPaymentInfoEntered {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id_str": @"39f39fj39f3jf93fj9fj39fj3f",
         @"order_id_str": @"dkfsjidfjsdifsdfksdjfkdsfjsdfkdsf"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsOrderUpdated {
@@ -212,44 +204,40 @@
 }
 
 + (NSDictionary*)ECommerceEventsCouponEntered {
-    NSDictionary *dict = @{
+    return @{
         @"order_id_str": @"50314b8e9bcf000000000000",
         @"cart_id_str": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id_str": @"may_deals_2016"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponApplied {
-    NSDictionary *dict = @{
+    return @{
         @"order_id_str": @"50314b8e9bcf000000000000",
         @"cart_id_str": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id_str": @"may_deals_2016",
         @"coupon_name_str": @"May Deals 2016",
         @"discount_real": @23.32
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponDenied {
-    NSDictionary *dict = @{
+    return @{
         @"order_id_str": @"50314b8e9bcf000000000000",
         @"cart_id_str": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id_str": @"may_deals_2016",
         @"reason_str": @"Coupon expired"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponRemoved {
-    NSDictionary *dict = @{
+    return @{
         @"order_id_str": @"50314b8e9bcf000000000000",
         @"cart_id_str": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id_str": @"may_deals_2016",
         @"coupon_name_str": @"May Deals 2016",
         @"discount_real": @23.32
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsProductAddedToWishlist {
@@ -295,17 +283,16 @@
 }
 
 + (NSDictionary*)ECommerceEventsProductReviewed {
-    NSDictionary *dict = @{
+    return @{
         @"product_id_str": @"507f1f77bcf86cd799439011",
         @"review_id_str": @"kdfjrj39fj39jf3",
         @"review_body_str": @"I love this product",
         @"rating_int": @5,
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCartShared {
-    NSDictionary *dict = @{
+    return @{
         @"share_via_str": @"email",
         @"share_message_str": @"kdfjrj39fj39jf3",
         @"review_body_str": @"Hey, check out this item",
@@ -313,11 +300,10 @@
         @"cart_id_str": @"d92jd29jd92jd29j92d92jd",
         @"products.product_id_strs": @[@"507f1f77bcf86cd799439011", @"505bd76785ebb509fc183733"]
     };
-    return dict;
 }
 
 + (NSDictionary*)getMonopolyProduct {
-     NSDictionary *dict = @{
+     return @{
          @"product_id_str": @"507f1f77bcf86cd799439011",
          @"sku_str": @"G-32",
          @"category_str": @"Games",
@@ -331,21 +317,19 @@
          @"url_str": @"https://www.example.com/product/path",
          @"image_url_str": @"https://www.example.com/product/path.jpg",
      };
-    return dict;
 }
 
 + (NSDictionary*)getGameProducts {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    dict[@"products.product_id_strs"] = @[@"507f1f77bcf86cd799439011", @"505bd76785ebb509fc183733"];
-    dict[@"products.sku_strs"] = @[@"45790-32", @"46493-32"];
-    dict[@"products.name_strs"] = @[@"Monopoly: 3rd Edition", @"Uno Card Game"];
-    dict[@"products.price_reals"] = @[@19.0, @3.0];
-    dict[@"products.position_ints"] = @[@1, @2];
-    dict[@"products.category_strs"] = @[@"Games", @"Games"];
-    dict[@"products.url_str"] = @"https://www.example.com/product/path-32";
-    dict[@"products.image_url_str"] = @"https://www.example.com/product/path.jpg-32";
-
-    return dict;
+    return @{
+        @"products.product_id_strs": @[@"507f1f77bcf86cd799439011", @"505bd76785ebb509fc183733"],
+        @"products.sku_strs": @[@"45790-32", @"46493-32"],
+        @"products.name_strs": @[@"Monopoly: 3rd Edition", @"Uno Card Game"],
+        @"products.price_reals": @[@19.0, @3.0],
+        @"products.position_ints": @[@1, @2],
+        @"products.category_strs": @[@"Games", @"Games"],
+        @"products.url_str": @"https://www.example.com/product/path-32",
+        @"products.image_url_str": @"https://www.example.com/product/path.jpg-32"
+    };
 }
 
 @end

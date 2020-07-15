@@ -12,21 +12,20 @@
 @implementation SegmentSpecFakeData
 
 + (NSDictionary*)ECommerceEventsProductsSearched {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:1];
-    dict[@"query"] = @"blue roses";
-    return dict;
+    return @{
+        @"query": @"blue roses"
+    };
 }
 
 + (NSDictionary*)ECommerceEventsProductListViewed {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    dict[@"list_id"] = @"hot_deals_1";
-    dict[@"category"] = @"Deals";
-    [dict addEntriesFromDictionary:[SegmentSpecFakeData getGameProducts]];
-    return dict;
+    return @{
+        @"list_id": @"bluehot_deals_1roses",
+        @"category": @"Deals"
+    };
 }
 
 + (NSDictionary*)ECommerceEventsProductListFiltered {
-    NSDictionary *dict = @{
+    return @{
         @"list_id": @"todays_deals_may_11_2019",
         @"filters": @[
                 @{
@@ -65,33 +64,29 @@
                 }
         ]
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsPromotionViewed {
-    NSDictionary *dict = @{
+    return @{
         @"promotion_id": @"promo_1",
         @"creative": @"top_banner_2",
         @"name": @"75% store-wide shoe sale",
         @"position": @"home_banner_top"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsPromotionClicked {
-    NSDictionary *dict = @{
+    return @{
         @"promotion_id": @"promo_1",
         @"creative": @"top_banner_2",
         @"name": @"75% store-wide shoe sale",
         @"position": @"home_banner_top"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsProductClicked {
     return [SegmentSpecFakeData getMonopolyProduct];
 }
-
 
 + (NSDictionary*)ECommerceEventsProductViewed {
     NSDictionary *tempDict = @{
@@ -142,31 +137,28 @@
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutStepViewed {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id": @"50314b8e9bcf000000000000",
         @"step": @2,
         @"shipping_method": @"Fedex",
         @"payment_method": @"Visa",
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutStepCompleted {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id": @"50314b8e9bcf000000000000",
         @"step": @2,
         @"shipping_method": @"Fedex",
         @"payment_method": @"Visa",
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCheckoutPaymentInfoEntered {
-    NSDictionary *dict = @{
+    return @{
         @"checkout_id": @"39f39fj39f3jf93fj9fj39fj3f",
         @"order_id": @"dkfsjidfjsdifsdfksdjfkdsfjsdfkdsf"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsOrderUpdated {
@@ -235,44 +227,40 @@
 }
 
 + (NSDictionary*)ECommerceEventsCouponEntered {
-    NSDictionary *dict = @{
+    return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id": @"may_deals_2016"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponApplied {
-    NSDictionary *dict = @{
+    return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id": @"may_deals_2016",
         @"coupon_name": @"May Deals 2016",
         @"discount": @23.32
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponDenied {
-    NSDictionary *dict = @{
+    return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id": @"may_deals_2016",
         @"reason": @"Coupon expired"
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCouponRemoved {
-    NSDictionary *dict = @{
+    return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
         @"coupon_id": @"may_deals_2016",
         @"coupon_name": @"May Deals 2016",
         @"discount": @23.32
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsProductAddedToWishlist {
@@ -318,17 +306,16 @@
 }
 
 + (NSDictionary*)ECommerceEventsProductReviewed {
-    NSDictionary *dict = @{
+    return @{
         @"product_id": @"507f1f77bcf86cd799439011",
         @"review_id": @"kdfjrj39fj39jf3",
         @"review_body": @"I love this product",
         @"rating": @5,
     };
-    return dict;
 }
 
 + (NSDictionary*)ECommerceEventsCartShared {
-    NSDictionary *dict = @{
+    return @{
         @"share_via": @"email",
         @"share_message": @"kdfjrj39fj39jf3",
         @"review_body": @"Hey, check out this item",
@@ -339,11 +326,10 @@
                 @{@"product_id": @"505bd76785ebb509fc183733"}
         ]
     };
-    return dict;
 }
 
 + (NSDictionary*)getMonopolyProduct {
-     NSDictionary *dict = @{
+     return @{
          @"product_id": @"507f1f77bcf86cd799439011",
          @"sku": @"G-32",
          @"category": @"Games",
@@ -357,11 +343,10 @@
          @"url": @"https://www.example.com/product/path",
          @"image_url": @"https://www.example.com/product/path.jpg",
      };
-    return dict;
 }
 
 + (NSDictionary*)getGameProducts {
-    NSDictionary *dict = @{
+    return @{
         @"products": @[
                 @{
                     @"product_id": @"507f1f77bcf86cd799439011",
@@ -383,8 +368,6 @@
                 }
         ]
     };
-    
-    return dict;
 }
 
 @end
