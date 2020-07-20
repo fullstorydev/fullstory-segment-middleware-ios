@@ -6,7 +6,7 @@
 //  Copyright (c) 2020 FullStory. All rights reserved.
 //
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 #import "FSSuffixedProperties.h"
 #import "SegmentSpecFakeData.h"
 #import "FSPropertiesFakeData.h"
