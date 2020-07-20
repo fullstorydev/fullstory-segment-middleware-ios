@@ -14,20 +14,21 @@
 
 @implementation SegmentSpecFakeData
 
-+ (NSDictionary*)ECommerceEventsProductsSearched {
++ (NSDictionary*)eCommerceEventProductsSearched {
     return @{
         @"query": @"blue roses"
     };
 }
 
-+ (NSDictionary*)ECommerceEventsProductListViewed {
-    return @{
-        @"list_id": @"bluehot_deals_1roses",
-        @"category": @"Deals"
-    };
++ (NSDictionary*)eCommerceEventProductListViewed {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    dict[@"list_id"] = @"hot_deals_1";
+    dict[@"category"] = @"Deals";
+    [dict addEntriesFromDictionary:[SegmentSpecFakeData getGameProducts]];
+    return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductListFiltered {
++ (NSDictionary*)eCommerceEventProductListFiltered {
     return @{
         @"list_id": @"todays_deals_may_11_2019",
         @"filters": @[
@@ -69,7 +70,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsPromotionViewed {
++ (NSDictionary*)eCommerceEventPromotionViewed {
     return @{
         @"promotion_id": @"promo_1",
         @"creative": @"top_banner_2",
@@ -78,7 +79,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsPromotionClicked {
++ (NSDictionary*)eCommerceEventPromotionClicked {
     return @{
         @"promotion_id": @"promo_1",
         @"creative": @"top_banner_2",
@@ -87,11 +88,11 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsProductClicked {
++ (NSDictionary*)eCommerceEventProductClicked {
     return [SegmentSpecFakeData getMonopolyProduct];
 }
 
-+ (NSDictionary*)ECommerceEventsProductViewed {
++ (NSDictionary*)eCommerceEventProductViewed {
     NSDictionary *tempDict = @{
         @"currency": @"usd",
         @"value": @18.99,
@@ -101,28 +102,28 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductAdded {
++ (NSDictionary*)eCommerceEventProductAdded {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     dict[@"cart_id"] = @"skdjsidjsdkdj29j";
     [dict addEntriesFromDictionary:[SegmentSpecFakeData getMonopolyProduct]];
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductRemoved {
++ (NSDictionary*)eCommerceEventProductRemoved {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     dict[@"cart_id"] = @"skdjsidjsdkdj29j";
     [dict addEntriesFromDictionary:[SegmentSpecFakeData getMonopolyProduct]];
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsCartViewed {
++ (NSDictionary*)eCommerceEventCartViewed {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     dict[@"cart_id"] = @"skdjsidjsdkdj29j";
     [dict addEntriesFromDictionary:[SegmentSpecFakeData getGameProducts]];
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsCheckoutStarted {
++ (NSDictionary*)eCommerceEventCheckoutStarted {
     NSDictionary *tempDict = @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"affiliation": @"Google Store",
@@ -139,7 +140,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsCheckoutStepViewed {
++ (NSDictionary*)eCommerceEventCheckoutStepViewed {
     return @{
         @"checkout_id": @"50314b8e9bcf000000000000",
         @"step": @2,
@@ -148,7 +149,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCheckoutStepCompleted {
++ (NSDictionary*)eCommerceEventCheckoutStepCompleted {
     return @{
         @"checkout_id": @"50314b8e9bcf000000000000",
         @"step": @2,
@@ -157,14 +158,14 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCheckoutPaymentInfoEntered {
++ (NSDictionary*)eCommerceEventCheckoutPaymentInfoEntered {
     return @{
         @"checkout_id": @"39f39fj39f3jf93fj9fj39fj3f",
         @"order_id": @"dkfsjidfjsdifsdfksdjfkdsfjsdfkdsf"
     };
 }
 
-+ (NSDictionary*)ECommerceEventsOrderUpdated {
++ (NSDictionary*)eCommerceEventOrderUpdated {
     NSDictionary *tempDict = @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"affiliation": @"Google Store",
@@ -181,7 +182,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsOrderCompleted {
++ (NSDictionary*)eCommerceEventOrderCompleted {
     NSDictionary *tempDict = @{
         @"checkout_id": @"fksdjfsdjfisjf9sdfjsd9f",
         @"order_id": @"50314b8e9bcf000000000000",
@@ -200,7 +201,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsOrderRefunded {
++ (NSDictionary*)eCommerceEventOrderRefunded {
     NSDictionary *tempDict = @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"total": @30,
@@ -211,7 +212,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsOrderCancelled {
++ (NSDictionary*)eCommerceEventOrderCancelled {
     NSDictionary *tempDict = @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"affiliation": @"Google Store",
@@ -229,7 +230,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsCouponEntered {
++ (NSDictionary*)eCommerceEventCouponEntered {
     return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
@@ -237,7 +238,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCouponApplied {
++ (NSDictionary*)eCommerceEventCouponApplied {
     return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
@@ -247,7 +248,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCouponDenied {
++ (NSDictionary*)eCommerceEventCouponDenied {
     return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
@@ -256,7 +257,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCouponRemoved {
++ (NSDictionary*)eCommerceEventCouponRemoved {
     return @{
         @"order_id": @"50314b8e9bcf000000000000",
         @"cart_id": @"923923929jd29jd92dj9j93fj3",
@@ -266,7 +267,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsProductAddedToWishlist {
++ (NSDictionary*)eCommerceEventProductAddedToWishlist {
     NSDictionary *tempDict = @{
         @"wishlist_id": @"skdjsidjsdkdj29j",
         @"wishlist_name": @"Loved Games"
@@ -276,7 +277,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductRemovedFromWishlist {
++ (NSDictionary*)eCommerceEventProductRemovedFromWishlist {
     NSDictionary *tempDict = @{
         @"wishlist_id": @"skdjsidjsdkdj29j",
         @"wishlist_name": @"Loved Games"
@@ -286,7 +287,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsWishlistProductAddedToCart {
++ (NSDictionary*)eCommerceEventWishlistProductAddedToCart {
     NSDictionary *tempDict = @{
         @"wishlist_id": @"skdjsidjsdkdj29j",
         @"wishlist_name": @"Loved Games",
@@ -297,7 +298,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductShared {
++ (NSDictionary*)eCommerceEventProductShared {
     NSDictionary *tempDict = @{
         @"share_via": @"email",
         @"share_message": @"Hey, check out this item",
@@ -308,7 +309,7 @@
     return dict;
 }
 
-+ (NSDictionary*)ECommerceEventsProductReviewed {
++ (NSDictionary*)eCommerceEventProductReviewed {
     return @{
         @"product_id": @"507f1f77bcf86cd799439011",
         @"review_id": @"kdfjrj39fj39jf3",
@@ -317,7 +318,7 @@
     };
 }
 
-+ (NSDictionary*)ECommerceEventsCartShared {
++ (NSDictionary*)eCommerceEventCartShared {
     return @{
         @"share_via": @"email",
         @"share_message": @"kdfjrj39fj39jf3",
