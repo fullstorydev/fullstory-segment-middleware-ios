@@ -29,6 +29,12 @@
     [super tearDown];
 }
 
+- (void)testFSSuffixedPropertiesInit {
+    _fsSuffixedProperties = [[FSSuffixedProperties alloc] init];
+    NSDictionary* output = [[NSDictionary alloc] init];
+    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+}
+
 - (void)testFSSuffixedPropertiesInitWithNilProperties {
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:nil];
     NSDictionary* expect = [[NSDictionary alloc] init];
