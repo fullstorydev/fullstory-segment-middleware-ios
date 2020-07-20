@@ -141,5 +141,62 @@
     XCTAssertEqualObjects(expect.timestamp, output.timestamp);
 }
 
+- (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_NextCalled {
+    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
+
+    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"write_key"];
+    [SEGAnalytics setupWithConfiguration:configuration];
+    SEGGroupPayload *groupPayload = [[SEGGroupPayload alloc] initWithGroupId:@"groupId"
+                                                            traits:[[NSDictionary alloc]init]
+                                                           context:[[NSDictionary alloc]init]
+                                                      integrations:[[NSDictionary alloc]init]];
+    SEGContext *context = [[[SEGContext alloc] initWithAnalytics:[SEGAnalytics sharedAnalytics]] modify:^(id<SEGMutableContext> _Nonnull ctx) {
+        ctx.eventType = SEGEventTypeGroup;
+        ctx.payload = groupPayload;
+    }];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"next block called"];
+    
+    void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
+        XCTAssertEqual(newContext.eventType, context.eventType);
+        XCTAssertEqual(newContext.userId, context.userId);
+        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.debug, context.debug);
+        XCTAssertEqualObjects(newContext._analytics, context._analytics);
+        XCTAssertEqualObjects(newContext.error, context.error);
+        XCTAssertEqualObjects(newContext.payload, context.payload);
+        [expectation fulfill];
+    };
+
+    [_fullStoryMiddleware context:context next:next];
+
+    [self waitForExpectations:@[expectation] timeout:10];
+}
+
+
+
+- (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_FSSetUserVarsCalled {
+    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
+
+    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"write_key"];
+    [SEGAnalytics setupWithConfiguration:configuration];
+    SEGGroupPayload *groupPayload = [[SEGGroupPayload alloc] initWithGroupId:@"groupId"
+                                                            traits:[[NSDictionary alloc]init]
+                                                           context:[[NSDictionary alloc]init]
+                                                      integrations:[[NSDictionary alloc]init]];
+    SEGContext *context = [[[SEGContext alloc] initWithAnalytics:[SEGAnalytics sharedAnalytics]] modify:^(id<SEGMutableContext> _Nonnull ctx) {
+        ctx.eventType = SEGEventTypeGroup;
+        ctx.payload = groupPayload;
+    }];
+    
+    id fs = OCMClassMock([FS class]);
+    
+    void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
+    };
+
+    [_fullStoryMiddleware context:context next:next];
+
+    OCMVerify([fs setUserVars:@{@"groupID": @"groupId"}]);
+}
 
 @end
