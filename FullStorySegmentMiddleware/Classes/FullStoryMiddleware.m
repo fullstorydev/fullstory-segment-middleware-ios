@@ -119,7 +119,7 @@
 
             newPayload = [[SEGScreenPayload alloc]
                                            initWithName:screenPayload.name
-                                           properties:screenPayload.properties
+                                           properties:newProps
                                            context:screenPayload.context
                                            integrations:screenPayload.integrations];
             break;
