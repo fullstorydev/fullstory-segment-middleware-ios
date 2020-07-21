@@ -59,7 +59,7 @@
     XCTAssertEqualObjects(_fullStoryMiddleware.allowlistEvents, @[@"Product Added"]);
 }
 
-- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayloadReturnsTrackPayload {
+- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayload_ReturnsTrackPayloadType {
     // create a mock for the SEGContext, we only need eventType from it here
     id segContextMock = OCMClassMock([SEGContext class]);
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeTrack);
@@ -68,7 +68,7 @@
     XCTAssertTrue([output isKindOfClass:[SEGTrackPayload class]]);
 }
 
-- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayloadReturnsTrackPayloadWithFSURL {
+- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayload_ReturnsTrackPayloadWithFSURL {
     // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     OCMStub([fs currentSessionURL]).andReturn(@"testURL");
@@ -96,7 +96,7 @@
     XCTAssertEqualObjects(expect.timestamp, output.timestamp);
 }
 
-- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayload {
+- (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayloadType {
     // create a mock for the SEGContext, we only need eventType from it here
     id segContextMock = OCMClassMock([SEGContext class]);
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeScreen);
@@ -133,7 +133,7 @@
     XCTAssertEqualObjects(expect.timestamp, output.timestamp);
 }
 
-- (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_NextCalled {
+- (void)testFullStoryMiddleware_GroupPayload_DisableGroupTraitsAsUserVars_NextBlockCalled {
     SEGGroupPayload *groupPayload = [[SEGGroupPayload alloc] initWithGroupId:@"groupId"
                                                             traits:[[NSDictionary alloc]init]
                                                            context:[[NSDictionary alloc]init]
@@ -162,9 +162,7 @@
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
-
-
-- (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_FSSetUserVarsCalled {
+- (void)testFullStoryMiddleware_GroupPayload_DisableGroupTraitsAsUserVars_FSSetUserVarsCalledWithGroupId {
     // create a mock for the FS
     id fs = OCMClassMock([FS class]);
 
@@ -176,13 +174,8 @@
         ctx.eventType = SEGEventTypeGroup;
         ctx.payload = groupPayload;
     }];
-    
-    
-    void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
-    };
 
-    [_fullStoryMiddleware context:context next:next];
-
+    [_fullStoryMiddleware context:context next:^(SEGContext * _Nullable newContext){}];
     OCMVerify([fs setUserVars:@{@"groupID": @"groupId"}]);
 }
 
