@@ -30,9 +30,11 @@
 
 - (void)setUp {
     [super setUp];
-    
+
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"write_key"];
     [SEGAnalytics setupWithConfiguration:configuration];
+    
+    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
 }
 
 - (void)tearDown {
@@ -41,7 +43,6 @@
 }
 
 - (void)testFullStoryMiddlewareInit {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
     XCTAssertTrue(_fullStoryMiddleware.enableFSSessionURLInEvents);
     XCTAssertFalse(_fullStoryMiddleware.enableSendScreenAsEvents);
     XCTAssertFalse(_fullStoryMiddleware.enableGroupTraitsAsUserVars);
@@ -59,9 +60,7 @@
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayloadReturnsTrackPayload {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
-
-    // create a mock for the SEGContext
+    // create a mock for the SEGContext, we only need eventType from it here
     id segContextMock = OCMClassMock([SEGContext class]);
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeTrack);
        
@@ -70,7 +69,10 @@
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayloadReturnsTrackPayloadWithFSURL {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
+    // create a mock for the FS
+    id fs = OCMClassMock([FS class]);
+    OCMStub([fs currentSessionURL]).andReturn(@"testURL");
+
     NSDictionary* emptyDict = [[NSDictionary alloc] init];
     SEGTrackPayload* trackPayload = [[SEGTrackPayload alloc] initWithEvent:@"testEvent"
                                                           properties:emptyDict
@@ -80,17 +82,12 @@
                                                           properties:@{@"FSSessionURL": @"testURL"}
                                                              context:emptyDict
                                                         integrations:emptyDict];
-
-    // create a mock for the SEGContext
-    id segContextMock = OCMClassMock([SEGContext class]);
-    OCMStub([segContextMock eventType]).andReturn(SEGEventTypeTrack);
-    OCMStub([segContextMock payload]).andReturn(trackPayload);
+    SEGContext *context = [[[SEGContext alloc] initWithAnalytics:[SEGAnalytics sharedAnalytics]] modify:^(id<SEGMutableContext> _Nonnull ctx) {
+        ctx.eventType = SEGEventTypeTrack;
+        ctx.payload = trackPayload;
+    }];
     
-    // create a mock for the FS
-    id fs = OCMClassMock([FS class]);
-    OCMStub([fs currentSessionURL]).andReturn(@"testURL");
-    
-    SEGTrackPayload* output = (SEGTrackPayload*)[_fullStoryMiddleware getNewPayloadWithFSURL:segContextMock];
+    SEGTrackPayload* output = (SEGTrackPayload*)[_fullStoryMiddleware getNewPayloadWithFSURL:context];
 
     XCTAssertEqualObjects(expect.context, output.context);
     XCTAssertEqualObjects(expect.properties, output.properties);
@@ -100,18 +97,19 @@
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayload {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
-
-    // create a mock for the SEGContext
+    // create a mock for the SEGContext, we only need eventType from it here
     id segContextMock = OCMClassMock([SEGContext class]);
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeScreen);
-       
+   
     SEGPayload* output = [_fullStoryMiddleware getNewPayloadWithFSURL:segContextMock];
     XCTAssertTrue([output isKindOfClass:[SEGScreenPayload class]]);
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayloadWithFSURL {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
+    // create a mock for the FS
+    id fs = OCMClassMock([FS class]);
+    OCMStub([fs currentSessionURL]).andReturn(@"testURL");
+
     NSDictionary* emptyDict = [[NSDictionary alloc] init];
     SEGScreenPayload* screenPayload = [[SEGScreenPayload alloc] initWithName:@"testScreen"
                                                           properties:emptyDict
@@ -121,17 +119,12 @@
                                                           properties:@{@"FSSessionURL": @"testURL"}
                                                              context:emptyDict
                                                         integrations:emptyDict];
-
-    // create a mock for the SEGContext
-    id segContextMock = OCMClassMock([SEGContext class]);
-    OCMStub([segContextMock eventType]).andReturn(SEGEventTypeScreen);
-    OCMStub([segContextMock payload]).andReturn(screenPayload);
+    SEGContext *context = [[[SEGContext alloc] initWithAnalytics:[SEGAnalytics sharedAnalytics]] modify:^(id<SEGMutableContext> _Nonnull ctx) {
+        ctx.eventType = SEGEventTypeScreen;
+        ctx.payload = screenPayload;
+    }];
     
-    // create a mock for the FS
-    id fs = OCMClassMock([FS class]);
-    OCMStub([fs currentSessionURL]).andReturn(@"testURL");
-    
-    SEGScreenPayload* output = (SEGScreenPayload*)[_fullStoryMiddleware getNewPayloadWithFSURL:segContextMock];
+    SEGScreenPayload* output = (SEGScreenPayload*)[_fullStoryMiddleware getNewPayloadWithFSURL:context];
 
     XCTAssertEqualObjects(expect.context, output.context);
     XCTAssertEqualObjects(expect.properties, output.properties);
@@ -141,10 +134,6 @@
 }
 
 - (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_NextCalled {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
-
-    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"write_key"];
-    [SEGAnalytics setupWithConfiguration:configuration];
     SEGGroupPayload *groupPayload = [[SEGGroupPayload alloc] initWithGroupId:@"groupId"
                                                             traits:[[NSDictionary alloc]init]
                                                            context:[[NSDictionary alloc]init]
@@ -154,8 +143,10 @@
         ctx.payload = groupPayload;
     }];
 
+    // expect the next block is called
     XCTestExpectation *expectation = [self expectationWithDescription:@"next block called"];
     
+    // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
         XCTAssertEqual(newContext.userId, context.userId);
@@ -168,17 +159,15 @@
     };
 
     [_fullStoryMiddleware context:context next:next];
-
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
 
 
 - (void)testFullStoryMiddleware_GroupPayload_DisnableGroupTraitsAsUserVars_FSSetUserVarsCalled {
-    _fullStoryMiddleware = [[FullStoryMiddleware alloc] init];
+    // create a mock for the FS
+    id fs = OCMClassMock([FS class]);
 
-    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"write_key"];
-    [SEGAnalytics setupWithConfiguration:configuration];
     SEGGroupPayload *groupPayload = [[SEGGroupPayload alloc] initWithGroupId:@"groupId"
                                                             traits:[[NSDictionary alloc]init]
                                                            context:[[NSDictionary alloc]init]
@@ -188,7 +177,6 @@
         ctx.payload = groupPayload;
     }];
     
-    id fs = OCMClassMock([FS class]);
     
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
     };
