@@ -10,6 +10,6 @@ target 'FullStorySegmentMiddleware_Example' do
 
   target 'FullStorySegmentMiddleware_Tests' do
     inherit! :search_paths
-    
+
   end
 end
