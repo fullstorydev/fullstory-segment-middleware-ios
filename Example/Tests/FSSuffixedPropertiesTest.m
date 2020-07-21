@@ -37,8 +37,8 @@
 
 - (void)testFSSuffixedPropertiesInit {
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] init];
-    NSDictionary* output = [[NSDictionary alloc] init];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [[NSDictionary alloc] init];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testFSSuffixedPropertiesInitWithProperties {
