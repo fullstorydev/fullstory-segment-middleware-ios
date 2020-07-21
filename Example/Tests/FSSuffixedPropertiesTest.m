@@ -29,221 +29,221 @@
     [super tearDown];
 }
 
-- (void)testFSSuffixedPropertiesInit {
-    _fsSuffixedProperties = [[FSSuffixedProperties alloc] init];
-    NSDictionary* output = [[NSDictionary alloc] init];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
-}
-
 - (void)testFSSuffixedPropertiesInitWithNilProperties {
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:nil];
-    NSDictionary* output = [[NSDictionary alloc] init];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [[NSDictionary alloc] init];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
+}
+
+- (void)testFSSuffixedPropertiesInit {
+    _fsSuffixedProperties = [[FSSuffixedProperties alloc] init];
+    NSDictionary* expect = [[NSDictionary alloc] init];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testFSSuffixedPropertiesInitWithProperties {
     NSDictionary* input = [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1", @1, @"key2", @3.0, @"key3", nil];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1_str", @1, @"key2_int", @3.0, @"key3_real", nil];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1_str", @1, @"key2_int", @3.0, @"key3_real", nil];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 // Segment Ecommerce Events coverage:
 - (void)testSegmentSpecECommerceEventProductsSearched {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductsSearched];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductsSearched];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductsSearched];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductListViewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductListViewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductListViewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductListViewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductListFiltered {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductListFiltered];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductListFiltered];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductListFiltered];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventPromotionViewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventPromotionViewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventPromotionViewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventPromotionViewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 
 - (void)testSegmentSpecECommerceEventPromotionClicked {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventPromotionClicked];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventPromotionClicked];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventPromotionClicked];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductClicked {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductClicked];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductClicked];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductClicked];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductViewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductViewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductViewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductViewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductAdded {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductAdded];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductAdded];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductAdded];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductRemoved {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductRemoved];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductRemoved];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductRemoved];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCartViewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCartViewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCartViewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCartViewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCheckoutStarted {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCheckoutStarted];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCheckoutStarted];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCheckoutStarted];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCheckoutStepViewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCheckoutStepViewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCheckoutStepViewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCheckoutStepViewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCheckoutStepCompleted {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCheckoutStepCompleted];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCheckoutStepCompleted];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCheckoutStepCompleted];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCheckoutPaymentInfoEntered {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCheckoutPaymentInfoEntered];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCheckoutPaymentInfoEntered];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCheckoutPaymentInfoEntered];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventOrderUpdated {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventOrderUpdated];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventOrderUpdated];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventOrderUpdated];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventOrderCompleted {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventOrderCompleted];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventOrderCompleted];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventOrderCompleted];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventOrderRefunded {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventOrderRefunded];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventOrderRefunded];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventOrderRefunded];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventOrderCancelled {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventOrderCancelled];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventOrderCancelled];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventOrderCancelled];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCouponEntered {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCouponEntered];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCouponEntered];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCouponEntered];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCouponApplied {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCouponApplied];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCouponApplied];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCouponApplied];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCouponDenied {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCouponDenied];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCouponDenied];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCouponDenied];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCouponRemoved {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCouponRemoved];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCouponRemoved];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCouponRemoved];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductAddedToWishlist {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductAddedToWishlist];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductAddedToWishlist];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductAddedToWishlist];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductRemovedFromWishlist {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductRemovedFromWishlist];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductRemovedFromWishlist];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductRemovedFromWishlist];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventWishlistProductAddedToCart {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventWishlistProductAddedToCart];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventWishlistProductAddedToCart];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventWishlistProductAddedToCart];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductShared {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductShared];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductShared];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductShared];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventProductReviewed {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventProductReviewed];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventProductReviewed];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventProductReviewed];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 - (void)testSegmentSpecECommerceEventCartShared {
     NSDictionary* input = [SegmentSpecFakeData eCommerceEventCartShared];
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* output = [FSPropertiesFakeData eCommerceEventCartShared];
-    XCTAssertEqualObjects(_fsSuffixedProperties.suffixedProperties, output);
+    NSDictionary* expect = [FSPropertiesFakeData eCommerceEventCartShared];
+    XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
 @end
