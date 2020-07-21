@@ -13,7 +13,6 @@
 #import <OCMock/OCMock.h>
 #import "FullStoryMiddleware.h"
 
-
 @interface FullStoryMiddlewareTest : XCTestCase
 
 @property (strong, nonatomic) FullStoryMiddleware* fullStoryMiddleware;
