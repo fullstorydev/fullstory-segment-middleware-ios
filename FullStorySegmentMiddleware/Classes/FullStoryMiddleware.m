@@ -37,9 +37,10 @@
             case SEGEventTypeGroup: {
                 SEGGroupPayload *payload = (SEGGroupPayload *) ctx.payload;
                 // Create mutable userVars and optionally add the group traits as userVars to be assoicated to the user in FullStory
-                NSMutableDictionary *userVars = [[NSMutableDictionary alloc] initWithObjectsAndKeys:payload.groupId,@"groupID", nil];
+                NSMutableDictionary *userVars = [[NSMutableDictionary alloc] initWithObjectsAndKeys:payload.groupId,@"groupID_str", nil];
                 if (self.enableGroupTraitsAsUserVars) {
-                    [userVars addEntriesFromDictionary:payload.traits];
+                    FSSuffixedProperties *traits = [[FSSuffixedProperties alloc] initWithProperties:payload.traits];
+                    [userVars addEntriesFromDictionary:traits.suffixedProperties];
                 }
                 [FS setUserVars:userVars];
                 break;
@@ -48,7 +49,8 @@
                 SEGIdentifyPayload *payload = (SEGIdentifyPayload *)ctx.payload;
                 // Segment Identify event, identify the same userID and traits in FullStory
                 // if displayName is not set, by default, user email is the displayName
-                [FS identify: payload.userId userVars:payload.traits];
+                FSSuffixedProperties *traits = [[FSSuffixedProperties alloc] initWithProperties:payload.traits];
+                [FS identify: payload.userId userVars:traits.suffixedProperties];
                 break;
             }
             case SEGEventTypeScreen: {
@@ -56,7 +58,8 @@
                 // Segment Screen event, optionally enabled and send as custom events into FullStory
                 if (self.enableSendScreenAsEvents) {
                     NSString *name = [[NSString alloc] initWithFormat:@"Segment Screen: %@",payload.name];
-                    [FS event:name properties:payload.properties];
+                    FSSuffixedProperties *fsProps = [[FSSuffixedProperties alloc] initWithProperties:payload.properties];
+                    [FS event:name properties:fsProps.suffixedProperties];
                 }
                 break;
             }
