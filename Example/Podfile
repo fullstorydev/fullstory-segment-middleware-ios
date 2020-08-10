@@ -6,6 +6,7 @@ pod 'Analytics', '~> 3.0'
 
 target 'FullStorySegmentMiddleware_Example' do
   pod 'FullStorySegmentMiddleware', :path => '../'
+  pod 'OCMock', '~>3.6'
 
   target 'FullStorySegmentMiddleware_Tests' do
     inherit! :search_paths
