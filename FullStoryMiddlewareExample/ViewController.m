@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+<<<<<<< HEAD
 #import <Analytics/SEGAnalytics.h>
 
 @interface ViewController ()
@@ -25,12 +26,18 @@
 // non-allowlisted events:
 @property (weak, nonatomic) IBOutlet UIButton *viewedCheckoutStep;
 
+=======
+
+@interface ViewController ()
+
+>>>>>>> ac8e56e (re-structure-project)
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+<<<<<<< HEAD
 }
 - (IBAction)onClickEvent:(UIButton*)sender { 
     // get event name from button title
@@ -55,6 +62,9 @@
                                properties:fakeEventProperties];
     
     [[SEGAnalytics sharedAnalytics] screen:eventName];
+=======
+    // Do any additional setup after loading the view.
+>>>>>>> ac8e56e (re-structure-project)
 }
 
 

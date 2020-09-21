@@ -110,16 +110,17 @@
 - (NSString *)getSuffixStringFromSimpleObject:(NSObject *)obj {
     // default to no suffix;
     NSString * suffix = @"";
+
     if ([obj isKindOfClass:[NSNumber class]]) {
         // defaut to real
         suffix = @"_real";
         NSNumber *n = (NSNumber *) obj;
         const char *typeCode = n.objCType;
-        if (*typeCode == 'i') {
-            suffix = @"_int";
-        } else if (*typeCode == 'B') {
-            // bool-type gets encoded as number number, and doesn't get encoded into 'B', but check anyway
+        
+        if (!strcmp(typeCode, "B") || !strcmp(typeCode, "c")) {
             suffix = @"_bool";
+        } else if (!strcmp(typeCode,"i")) {
+            suffix = @"_int";
         }
     } else if ([obj isKindOfClass:[NSDate class]]) {
         suffix = @"_date";

@@ -17,5 +17,3 @@ target 'FullStoryMiddlewareExample' do
   common_pods
   pod 'FullStorySegmentMiddleware', :path => '.'
 end
-  
-

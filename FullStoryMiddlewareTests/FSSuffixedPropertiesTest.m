@@ -42,9 +42,20 @@
 }
 
 - (void)testFSSuffixedPropertiesInitWithProperties {
-    NSDictionary* input = [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1", @1, @"key2", @3.0, @"key3", nil];
+    NSDictionary* input = @{
+        @"key1": @"value1",
+        @"key2": @5,
+        @"key3": @3.0,
+        @"key4": @YES
+    };
     _fsSuffixedProperties = [[FSSuffixedProperties alloc] initWithProperties:input];
-    NSDictionary* expect = [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1_str", @1, @"key2_int", @3.0, @"key3_real", nil];
+    NSDictionary* expect = @{
+        @"key1_str": @"value1",
+        @"key2_int": @5,
+        @"key3_real": @3.0,
+        @"key4_bool": @YES
+    };
+    
     XCTAssertEqualObjects(expect, _fsSuffixedProperties.suffixedProperties);
 }
 
