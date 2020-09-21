@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FSOrgId</key>
-	<string>&lt;YOUR_ORG_ID&gt;</string>
+	<string>56EM</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
