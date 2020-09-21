@@ -12,6 +12,23 @@
 #import "FullStoryMiddleware.h"
 #import "FSSuffixedProperties.h"
 
+
+// private SEGScreenPayload to provide the signitures to check for during respondsToSelector:@selector
+// this is due to a signiture change between Analytics 3 and 4.
+// We workaround it by checking if the init response to either of these below
+private @interface SEGScreenPayload()
+- (instancetype)initWithName:(NSString *)name
+                  properties:(NSDictionary *)properties
+                     context:(NSDictionary *)context
+                integrations:(NSDictionary *)integrations;
+
+- (instancetype)initWithName:(NSString *)name
+                    category:(NSString *)category
+                  properties:(NSDictionary *_Nullable)properties
+                     context:(NSDictionary *)context
+                integrations:(NSDictionary *)integrations;
+@end
+
 @implementation FullStoryMiddleware
 
 - (id)initWithAllowlistEvents:(NSArray<NSString *> *)allowlistEvents {
@@ -117,11 +134,25 @@
             NSMutableDictionary *newProps = [[NSMutableDictionary alloc] initWithDictionary:screenPayload.properties];
             [newProps setValue:[FS currentSessionURL] forKey:@"FSSessionURL"];
 
-            newPayload = [[SEGScreenPayload alloc]
-                                           initWithName:screenPayload.name
-                                           properties:newProps
-                                           context:screenPayload.context
-                                           integrations:screenPayload.integrations];
+            {
+                SEGScreenPayload *uninitPayload = [SEGScreenPayload alloc];
+
+                // init has a different signiture for Analytics version < 4
+                if ([uninitPayload respondsToSelector:@selector(initWithName:properties:context:integrations:)]) {
+                    newPayload = [uninitPayload
+                               initWithName:screenPayload.name
+                               properties:newProps
+                               context:screenPayload.context
+                               integrations:screenPayload.integrations];
+                }else if ([uninitPayload respondsToSelector:@selector(initWithName:category:properties:context:integrations:)]) {
+                    newPayload = [uninitPayload
+                               initWithName:screenPayload.name
+                               category:screenPayload.category
+                               properties:newProps
+                               context:screenPayload.context
+                               integrations:screenPayload.integrations];
+                }
+            }
             break;
         }
         default:
