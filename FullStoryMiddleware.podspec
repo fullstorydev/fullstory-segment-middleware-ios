@@ -15,16 +15,16 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "FullStoryMiddleware"
+  spec.name         = "FullStorySegmentMiddleware"
   spec.version      = "0.1.0"
-  spec.summary      = "FullStoryMiddleware is a project demonstrating the full potential of joining forces between Segment + FullStory."
+  spec.summary      = "FullStory Segment Middleware is a project demonstrating the full potential of joining forces between Segment + FullStory."
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-  FullStoryMiddleware is a project demonstrating the full potential of joining forces between Segment + FullStory.
+  FullStory Segment Middleware is a project demonstrating the full potential of joining forces between Segment + FullStory.
   TODO: detailed description needed here
                    DESC
 

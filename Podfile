@@ -8,6 +8,7 @@ end
 target 'FullStoryMiddleware' do
   common_pods
 end
+  
 
 target 'FullStoryMiddlewareTests' do
   common_pods
