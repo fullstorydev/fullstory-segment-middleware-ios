@@ -17,7 +17,7 @@
                BlueprintIdentifier = "5C8623DA3F7A57BE95575EB930C73926"
                BuildableName = "FullStorySegmentMiddleware.framework"
                BlueprintName = "FullStorySegmentMiddleware"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
