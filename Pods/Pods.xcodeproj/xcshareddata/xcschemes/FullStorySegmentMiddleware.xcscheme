@@ -14,10 +14,17 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+<<<<<<< HEAD:Pods/Pods.xcodeproj/xcshareddata/xcschemes/FullStorySegmentMiddleware.xcscheme
                BlueprintIdentifier = "5C8623DA3F7A57BE95575EB930C73926"
                BuildableName = "FullStorySegmentMiddleware.framework"
                BlueprintName = "FullStorySegmentMiddleware"
                ReferencedContainer = "container:Pods.xcodeproj">
+=======
+               BlueprintIdentifier = "4BD6B36894553FAB4325547014B54B9D"
+               BuildableName = "FullStoryMiddleware"
+               BlueprintName = "FullStoryMiddleware"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+>>>>>>> f91e3bd (re-structure-project):FullStoryMiddleware.xcodeproj/xcshareddata/xcschemes/FullStoryMiddleware.xcscheme
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +35,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "04106DA3251D27BE007A2E69"
+               BuildableName = "FullStoryMiddlewareTests.xctest"
+               BlueprintName = "FullStoryMiddlewareTests"
+               ReferencedContainer = "container:FullStoryMiddleware.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -47,6 +64,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4BD6B36894553FAB4325547014B54B9D"
+            BuildableName = "FullStoryMiddleware"
+            BlueprintName = "FullStoryMiddleware"
+            ReferencedContainer = "container:Pods/Pods.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
