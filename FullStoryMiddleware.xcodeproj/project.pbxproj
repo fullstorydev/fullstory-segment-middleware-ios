@@ -23,6 +23,7 @@
 		04106E4F251D2CFC007A2E69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04106E4E251D2CFC007A2E69 /* Assets.xcassets */; };
 		04106E52251D2CFC007A2E69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04106E50251D2CFC007A2E69 /* LaunchScreen.storyboard */; };
 		04106E55251D2CFC007A2E69 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04106E54251D2CFC007A2E69 /* main.m */; };
+		3B37F8566BD68842620E767F /* libPods-FullStoryMiddlewareExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6386EDB2E2C02816EE0188BE /* libPods-FullStoryMiddlewareExample.a */; };
 		80378F775ECA01FAF422D77D /* libPods-FullStoryMiddleware.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6AD7FE6FAFA682A46013891 /* libPods-FullStoryMiddleware.a */; };
 		CB578CC43A1014E1F931A476 /* libPods-FullStoryMiddlewareTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59986B49906FF607E3B20F54 /* libPods-FullStoryMiddlewareTests.a */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B37F8566BD68842620E767F /* libPods-FullStoryMiddlewareExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +236,6 @@
 				04106DA0251D27BE007A2E69 /* Sources */,
 				04106DA1251D27BE007A2E69 /* Frameworks */,
 				04106DA2251D27BE007A2E69 /* Resources */,
-				DC97F9711CB0857FDA230267 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -250,6 +251,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04106E56251D2CFC007A2E69 /* Build configuration list for PBXNativeTarget "FullStoryMiddlewareExample" */;
 			buildPhases = (
+				FB5E8D45EA061BE1797A2BC6 /* [CP] Check Pods Manifest.lock */,
 				04106E3C251D2CFA007A2E69 /* Sources */,
 				04106E3D251D2CFA007A2E69 /* Frameworks */,
 				04106E3E251D2CFA007A2E69 /* Resources */,
@@ -376,21 +378,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DC97F9711CB0857FDA230267 /* [CP] Embed Pods Frameworks */ = {
+		FB5E8D45EA061BE1797A2BC6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FullStoryMiddlewareExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -665,6 +672,7 @@
 		};
 		04106E57251D2CFC007A2E69 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4AE545A30E82F8A01AEE81A /* Pods-FullStoryMiddlewareExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -683,6 +691,7 @@
 		};
 		04106E58251D2CFC007A2E69 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04A74E82D1F81BD1D77CDD1A /* Pods-FullStoryMiddlewareExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
