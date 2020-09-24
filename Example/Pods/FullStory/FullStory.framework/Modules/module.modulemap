@@ -1,6 +1,0 @@
-framework module FullStory {
-  umbrella header "FullStory.h"
-
-  export *
-  module * { export * }
-}
