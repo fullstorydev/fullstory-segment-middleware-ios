@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04106DA5251D27BE007A2E69 /* FullStoryMiddleware.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04106D9B251D27BE007A2E69 /* FullStoryMiddleware.framework */; };
-		04106DAC251D27BE007A2E69 /* FullStoryMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 04106D9E251D27BE007A2E69 /* FullStoryMiddleware.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		04106DE2251D29D7007A2E69 /* FSSuffixedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 04106DDE251D29D7007A2E69 /* FSSuffixedProperties.h */; };
 		04106DE3251D29D7007A2E69 /* FSSuffixedProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 04106DDF251D29D7007A2E69 /* FSSuffixedProperties.m */; };
 		04106DE4251D29D7007A2E69 /* FullStoryMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 04106DE0251D29D7007A2E69 /* FullStoryMiddleware.m */; };
 		04106DF2251D2A56007A2E69 /* SegmentSpecFakeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 04106DEC251D2A56007A2E69 /* SegmentSpecFakeData.m */; };
@@ -23,6 +20,8 @@
 		04106E4F251D2CFC007A2E69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04106E4E251D2CFC007A2E69 /* Assets.xcassets */; };
 		04106E52251D2CFC007A2E69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04106E50251D2CFC007A2E69 /* LaunchScreen.storyboard */; };
 		04106E55251D2CFC007A2E69 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04106E54251D2CFC007A2E69 /* main.m */; };
+		04BE03C52538967C0092EC6F /* FullStoryMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 04106D9E251D27BE007A2E69 /* FullStoryMiddleware.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04BE03D32538968C0092EC6F /* FSSuffixedProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 04106DDE251D29D7007A2E69 /* FSSuffixedProperties.h */; };
 		3B37F8566BD68842620E767F /* libPods-FullStoryMiddlewareExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6386EDB2E2C02816EE0188BE /* libPods-FullStoryMiddlewareExample.a */; };
 		80378F775ECA01FAF422D77D /* libPods-FullStoryMiddleware.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6AD7FE6FAFA682A46013891 /* libPods-FullStoryMiddleware.a */; };
 		CB578CC43A1014E1F931A476 /* libPods-FullStoryMiddlewareTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59986B49906FF607E3B20F54 /* libPods-FullStoryMiddlewareTests.a */; };
@@ -39,10 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04106D9B251D27BE007A2E69 /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FullStoryMiddleware.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		04106D9E251D27BE007A2E69 /* FullStoryMiddleware.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FullStoryMiddleware.h; sourceTree = "<group>"; };
 		04106D9F251D27BE007A2E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04106DA4251D27BE007A2E69 /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FullStoryMiddlewareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04106DAB251D27BE007A2E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04106DDE251D29D7007A2E69 /* FSSuffixedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSSuffixedProperties.h; sourceTree = "<group>"; };
 		04106DDF251D29D7007A2E69 /* FSSuffixedProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSSuffixedProperties.m; sourceTree = "<group>"; };
@@ -53,7 +50,6 @@
 		04106DEF251D2A56007A2E69 /* FullStoryMiddlewareTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullStoryMiddlewareTest.m; sourceTree = "<group>"; };
 		04106DF0251D2A56007A2E69 /* FSPropertiesFakeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSPropertiesFakeData.h; sourceTree = "<group>"; };
 		04106DF1251D2A56007A2E69 /* SegmentSpecFakeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentSpecFakeData.h; sourceTree = "<group>"; };
-		04106E40251D2CFA007A2E69 /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullStoryMiddlewareExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04106E42251D2CFA007A2E69 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04106E43251D2CFA007A2E69 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		04106E45251D2CFA007A2E69 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -66,6 +62,9 @@
 		04106E53251D2CFC007A2E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04106E54251D2CFC007A2E69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04A74E82D1F81BD1D77CDD1A /* Pods-FullStoryMiddlewareExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareExample.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample.release.xcconfig"; sourceTree = "<group>"; };
+		04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FullStoryMiddleware.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FullStoryMiddlewareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullStoryMiddlewareExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D6CE0983DA4EEB9DF2AE1A /* Pods-FullStoryMiddlewareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.release.xcconfig"; sourceTree = "<group>"; };
 		21235F9700236CE4B2F4EAAE /* Pods-FullStoryMiddlewareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.debug.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.debug.xcconfig"; sourceTree = "<group>"; };
 		22DC07B9D1538ECCFB67C51E /* Pods-FullStoryMiddleware.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddleware.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddleware/Pods-FullStoryMiddleware.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04106DA5251D27BE007A2E69 /* FullStoryMiddleware.framework in Frameworks */,
 				CB578CC43A1014E1F931A476 /* libPods-FullStoryMiddlewareTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,20 +119,12 @@
 				04106D9D251D27BE007A2E69 /* FullStoryMiddleware */,
 				04106DA8251D27BE007A2E69 /* FullStoryMiddlewareTests */,
 				04106E41251D2CFA007A2E69 /* FullStoryMiddlewareExample */,
-				04106D9C251D27BE007A2E69 /* Products */,
 				E4302D4B1DEDD6B1ED6BA332 /* Pods */,
 				011EAF25B233502141487A39 /* Frameworks */,
+				04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */,
+				04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */,
+				04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */,
 			);
-			sourceTree = "<group>";
-		};
-		04106D9C251D27BE007A2E69 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				04106D9B251D27BE007A2E69 /* FullStoryMiddleware.framework */,
-				04106DA4251D27BE007A2E69 /* FullStoryMiddlewareTests.xctest */,
-				04106E40251D2CFA007A2E69 /* FullStoryMiddlewareExample.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		04106D9D251D27BE007A2E69 /* FullStoryMiddleware */ = {
@@ -201,8 +191,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04106DE2251D29D7007A2E69 /* FSSuffixedProperties.h in Headers */,
-				04106DAC251D27BE007A2E69 /* FullStoryMiddleware.h in Headers */,
+				04BE03D32538968C0092EC6F /* FSSuffixedProperties.h in Headers */,
+				04BE03C52538967C0092EC6F /* FullStoryMiddleware.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +215,7 @@
 			);
 			name = FullStoryMiddleware;
 			productName = FullStoryMiddleware;
-			productReference = 04106D9B251D27BE007A2E69 /* FullStoryMiddleware.framework */;
+			productReference = 04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		04106DA3251D27BE007A2E69 /* FullStoryMiddlewareTests */ = {
@@ -236,6 +226,7 @@
 				04106DA0251D27BE007A2E69 /* Sources */,
 				04106DA1251D27BE007A2E69 /* Frameworks */,
 				04106DA2251D27BE007A2E69 /* Resources */,
+				612DA03BD257D4264D94F843 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -244,7 +235,7 @@
 			);
 			name = FullStoryMiddlewareTests;
 			productName = FullStoryMiddlewareTests;
-			productReference = 04106DA4251D27BE007A2E69 /* FullStoryMiddlewareTests.xctest */;
+			productReference = 04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		04106E3F251D2CFA007A2E69 /* FullStoryMiddlewareExample */ = {
@@ -255,6 +246,7 @@
 				04106E3C251D2CFA007A2E69 /* Sources */,
 				04106E3D251D2CFA007A2E69 /* Frameworks */,
 				04106E3E251D2CFA007A2E69 /* Resources */,
+				D78AAA80E810FDCC9C6AB498 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -262,7 +254,7 @@
 			);
 			name = FullStoryMiddlewareExample;
 			productName = FullStoryMiddlewareExample;
-			productReference = 04106E40251D2CFA007A2E69 /* FullStoryMiddlewareExample.app */;
+			productReference = 04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -295,7 +287,7 @@
 				Base,
 			);
 			mainGroup = 04106D91251D27BD007A2E69;
-			productRefGroup = 04106D9C251D27BE007A2E69 /* Products */;
+			productRefGroup = 04106D91251D27BD007A2E69;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -376,6 +368,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		612DA03BD257D4264D94F843 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D78AAA80E810FDCC9C6AB498 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB5E8D45EA061BE1797A2BC6 /* [CP] Check Pods Manifest.lock */ = {
@@ -522,6 +548,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -578,6 +605,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -597,6 +625,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = FullStoryMiddleware/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,6 +634,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fullstorydev.FullStoryMiddleware;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -622,6 +652,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = FullStoryMiddleware/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,6 +661,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fullstorydev.FullStoryMiddleware;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -679,6 +711,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KZF5HG57S9;
 				INFOPLIST_FILE = FullStoryMiddlewareExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,6 +731,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KZF5HG57S9;
 				INFOPLIST_FILE = FullStoryMiddlewareExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
