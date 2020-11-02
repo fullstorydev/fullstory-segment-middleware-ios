@@ -19,7 +19,7 @@ FullStory's KB Article: [FullStory Integration with Segment Technical Guide - Mo
 
 ### Handle Login/Logout 
 
-- Identify a user and their traits at login:
+#### Identify a user and their traits at login
 
 Similar to `FS.identify` Segment has an `Analytics.identify` API that lets you tie a user’s identity to their actions and recordings in order to help you understand their journey.
 
