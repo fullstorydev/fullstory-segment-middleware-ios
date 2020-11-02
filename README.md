@@ -46,7 +46,6 @@ All custom events are searchable in FullStory. You can find and view sessions th
 
 
 ## Add FS session replay URL to Segment events using Middleware
----
 With FullStory for Mobile Apps, you can retrieve a link to the session replay and attach it to any Segment event.
 
 - By default we automatically insert the FullStory session replay URL as part of the Segment track and screen event properties, and all event contexts.
