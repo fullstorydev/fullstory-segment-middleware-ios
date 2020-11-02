@@ -25,7 +25,7 @@ Similar to `FS.identify` Segment has an `Analytics.identify` API that lets you t
 
 With this API, you can also record what Segment calls traits (`userVars` in FullStory) about your users, like their email, name, preferences, etc. 
 
-The middleware automatically hook into Segment API: `Analytics.identify` that sends user ID and traits to FullStory
+The middleware automatically hooks into the `Analytics.identify` Segment API that sends user ID and traits to FullStory.
 
 
 - Anonymize the user at logout
