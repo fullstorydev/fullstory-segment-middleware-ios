@@ -14,7 +14,6 @@ FullStory's KB Article: [FullStory Integration with Segment Technical Guide - Mo
 
 ## Sending data to FullStory using Middleware
 
-<br />
 
 ### Handle Login/Logout 
 
