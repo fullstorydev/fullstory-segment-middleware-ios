@@ -5,7 +5,6 @@ Segment is a customer data platform that unifies data collection and provides da
 
 With minimal code change, the FullStory Segment Middleware provide developers the ability to send Segment Analytics data to FullStory, and adding FullStory session replay links to Segment events.
 
-<br/>
 
 ### More information:
 --- 
