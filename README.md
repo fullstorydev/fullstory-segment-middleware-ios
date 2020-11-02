@@ -44,7 +44,6 @@ We will log to FullStory that a Segment API is called but omit all data if the e
 
 All custom events are searchable in FullStory. You can find and view sessions that match your search criteria.
 
- <br />
 
 ## Add FS session replay URL to Segment events using Middleware
 ---
