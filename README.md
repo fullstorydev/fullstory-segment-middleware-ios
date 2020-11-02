@@ -8,6 +8,8 @@ With minimal code changes, the FullStory Segment Middleware provides developers 
 
 ## More information
 
+[FullStory Getting Started with iOS Recording](https://help.fullstory.com/hc/en-us/articles/360042772333-Getting-Started-with-iOS-Recording)
+
 [Segment Middleware for iOS](https://segment.com/docs/connections/sources/catalog/libraries/mobile/ios/middleware/)
 
 FullStory's KB Article: [FullStory Integration with Segment Technical Guide - Mobile](https://help.fullstory.com/hc/en-us/articles/360051691994-FullStory-Integration-with-Segment-Technical-Guide-Mobile-Beta-)
@@ -58,7 +60,7 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
 
 1. Before you begin, make sure you have both FullStory and Segment setup in your application:
 
-    - Add FullStory to your iOS app
+    - Add FullStory to your iOS app: [Getting Started with iOS Recording](https://help.fullstory.com/hc/en-us/articles/360042772333-Getting-Started-with-iOS-Recording)
 
     - Use CocoaPods to add to project:
 
