@@ -26,7 +26,7 @@ With this API, you can also record what Segment calls traits (`userVars` in Full
 The middleware automatically hooks into the `Analytics.identify` Segment API that sends user ID and traits to FullStory.
 
 
-- Anonymize the user at logout
+#### Anonymize the user at logout
 
 If your app supports login/logout, then you need to anonymize logged in users when they log out by calling `Analytics.reset` to clear Segment cache and anonymize this user. 
 
