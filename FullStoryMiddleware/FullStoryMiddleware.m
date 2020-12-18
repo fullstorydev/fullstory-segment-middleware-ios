@@ -21,6 +21,7 @@
          self.enableFSSessionURLInEvents = true;
          self.allowlistAllTrackEvents = false;
          self.allowlistEvents = [[NSMutableArray alloc] initWithArray:allowlistEvents];
+         self.enableIdentifyEvents = true;
      }
     return self;
 }
@@ -49,8 +50,11 @@
                 SEGIdentifyPayload *payload = (SEGIdentifyPayload *)ctx.payload;
                 // Segment Identify event, identify the same userID and traits in FullStory
                 // if displayName is not set, by default, user email is the displayName
-                FSSuffixedProperties *traits = [[FSSuffixedProperties alloc] initWithProperties:payload.traits];
-                [FS identify: payload.userId userVars:traits.suffixedProperties];
+                // optionally disabled with enableIdentifyEvents
+                if (self.enableIdentifyEvents) {
+                  FSSuffixedProperties *traits = [[FSSuffixedProperties alloc] initWithProperties:payload.traits];
+                  [FS identify: payload.userId userVars:traits.suffixedProperties];
+                }
                 break;
             }
             case SEGEventTypeScreen: {
@@ -80,10 +84,10 @@
             }
             default: break;
         }
-        
+
         // Always log the segment event with INFO level to FullStory dev tools
         [FS logWithLevel:FSLOG_INFO format:@"Segment event type: %@", [self getEventName:ctx.eventType]];
-        
+
         // Only override the ctx.payload to insert the current FullStory session URL if:
         // - it is Track or Screen event
         // - enableFSSessionURLInEvents is YES to enable FS session URL as part of the track/screen event properties

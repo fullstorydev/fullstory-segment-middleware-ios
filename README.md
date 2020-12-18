@@ -74,7 +74,7 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
 
 2. Add the middleware during the initialization of your segment analytics client to enable FullStory.
 
-    - Create FullStoryMiddleware with appropriate settings 
+    - Create FullStoryMiddleware with appropriate settings
 
       ```swift
       let fullStoryMiddleware: FullStoryMiddleware
@@ -91,6 +91,8 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
       fsm.enableGroupTraitsAsUserVars = true
       // enable to send FS custom events on screen event, default to false
       fsm.enableSendScreenAsEvents = true
+      // enable Segment identify events to be sent as FS identify event, default to true
+      fsm.enableIdentifyEvents = true
 
       configuration.middlewares = [fsm]
       SEGAnalytics.setup(with: configuration)
