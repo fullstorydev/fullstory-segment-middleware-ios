@@ -19,6 +19,7 @@
 @property (nonatomic) BOOL enableGroupTraitsAsUserVars;
 @property (nonatomic) BOOL enableFSSessionURLInEvents;
 @property (nonatomic) BOOL allowlistAllTrackEvents;
+@property (nonatomic) BOOL enableIdentifyEvents;
 
 - (id)initWithAllowlistEvents:(NSArray<NSString *> *) allowlistEvents;
 
