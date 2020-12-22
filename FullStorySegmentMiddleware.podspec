@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-  FullStory Segment Middleware is a project demonstrating the full potential of joining forces between Segment + FullStory.
+  This demonstrates the full potential of joining forces between Segment and FullStory.
   TODO: detailed description needed here
                    DESC
 
