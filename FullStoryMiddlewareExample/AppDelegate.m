@@ -23,19 +23,27 @@
     NSArray *allowList = @[@"Product Viewed", @"Order Completed", @"Completed Checkout Step"];
     FullStoryMiddleware *fsm = [[FullStoryMiddleware alloc] initWithAllowlistEvents: allowList];
     
-    // enable to insert FS session URL to Segment event properties and contexts
-    // default to true
+    // Enable to insert FS session URL to Segment event properties and contexts.
+    //
+    // Default is true.
     fsm.enableFSSessionURLInEvents = true;
-    // when calling Segment group, send group traits as userVars
-    // default to false
+    
+    // When calling Segment group, send group traits as userVars.
+    //
+    // Default is false.
     fsm.enableGroupTraitsAsUserVars = true;
-    // when calling Segment screen, sent the screen event as custom events to FS
-    // default to false
+    
+    // When calling Segment screen, send the screen event as custom events to FS.
+    //
+    // Default is false.
     fsm.enableSendScreenAsEvents = true;
-    // allow all track events as FS custom events
-    // alternatively allow list events that you would like to track
-    // note: enabling this will cause the middleware to ignore the event allowlist
-    // default to false
+    
+    // Allow all track events as FS custom events.
+    // Alternatively, allow list events that you would like to track.
+    //
+    // Note: enabling this will cause the middleware to ignore the event allowlist.
+    //
+    // Default is false.
     fsm.allowlistAllTrackEvents = true;
     
     
