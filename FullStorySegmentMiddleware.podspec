@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "FullStorySegmentMiddleware"
   spec.version      = "0.1.0"
-  spec.summary      = "FullStory Segment Middleware is a project demonstrating the full potential of joining forces between Segment + FullStory."
+  spec.summary      = "Demonstrates the full potential of joining forces between Segment and FullStory."
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
