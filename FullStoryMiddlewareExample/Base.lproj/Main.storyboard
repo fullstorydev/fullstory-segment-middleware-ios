@@ -17,41 +17,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AHT-Fe-Pu2">
-                                <rect key="frame" x="32" y="153" width="156" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AHT-Fe-Pu2">
+                                <rect key="frame" x="129" y="146" width="156" height="30"/>
                                 <state key="normal" title="Viewed Checkout Step"/>
                                 <connections>
                                     <action selector="onClickEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uOU-66-LVP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q88-pG-YA2">
-                                <rect key="frame" x="32" y="191" width="181" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q88-pG-YA2">
+                                <rect key="frame" x="117" y="199" width="181" height="30"/>
                                 <state key="normal" title="Completed Checkout Step"/>
                                 <connections>
                                     <action selector="onClickEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bqs-di-3dj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBA-uC-7F3">
-                                <rect key="frame" x="32" y="229" width="119" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Order Completed"/>
-                                <connections>
-                                    <action selector="onClickEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tgn-zh-7QB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p5k-7O-FO8">
-                                <rect key="frame" x="32" y="115" width="109" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p5k-7O-FO8">
+                                <rect key="frame" x="153" y="93" width="109" height="30"/>
                                 <state key="normal" title="Product Viewed"/>
                                 <connections>
                                     <action selector="onClickEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tzj-Cy-G3K"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBA-uC-7F3">
+                                <rect key="frame" x="148" y="252" width="119" height="30"/>
+                                <state key="normal" title="Order Completed"/>
+                                <connections>
+                                    <action selector="onClickEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tgn-zh-7QB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="q88-pG-YA2" firstAttribute="top" secondItem="AHT-Fe-Pu2" secondAttribute="bottom" constant="8" symbolic="YES" id="58q-FA-If0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="p5k-7O-FO8" secondAttribute="trailing" constant="273" id="J3l-f8-Ien"/>
+                            <constraint firstItem="MBA-uC-7F3" firstAttribute="top" secondItem="q88-pG-YA2" secondAttribute="bottom" constant="8" symbolic="YES" id="MGc-AC-8vJ"/>
+                            <constraint firstItem="AHT-Fe-Pu2" firstAttribute="top" secondItem="p5k-7O-FO8" secondAttribute="bottom" constant="8" symbolic="YES" id="cf4-y5-iCd"/>
+                            <constraint firstItem="p5k-7O-FO8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="71" id="cn7-FJ-fGM"/>
+                            <constraint firstItem="p5k-7O-FO8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="pjh-od-gkL"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="completedCheckoutStep" destination="q88-pG-YA2" id="p6B-GF-Oqy"/>
