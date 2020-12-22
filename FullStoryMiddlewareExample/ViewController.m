@@ -32,8 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
-- (IBAction)onClickEvent:(UIButton*)sender {
-    // This 
+- (IBAction)onClickEvent:(UIButton*)sender { 
     // get event name from button title
     NSString *eventName = sender.currentTitle;
     NSDictionary *fakeEventProperties = @{
