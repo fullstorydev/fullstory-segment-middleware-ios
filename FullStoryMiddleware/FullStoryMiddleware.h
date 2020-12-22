@@ -21,7 +21,7 @@ FOUNDATION_EXPORT const unsigned char FullStoryMiddlewareVersionString[];
 
 @interface FullStoryMiddleware : NSObject<SEGMiddleware>
 
-@property (strong, nonatomic) NSArray* allowlistEvents;
+@property (strong, nonatomic) NSArray<NSString *>* allowlistEvents;
 @property (nonatomic) BOOL enableSendScreenAsEvents;
 @property (nonatomic) BOOL enableGroupTraitsAsUserVars;
 @property (nonatomic) BOOL enableFSSessionURLInEvents;
