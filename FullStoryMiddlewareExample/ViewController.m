@@ -11,10 +11,10 @@
 
 @interface ViewController ()
 
-/* Please note that this is simply minimal code to demostrate the functionality of the FullStorySegmentMiddleware
- please follow Apple's guide line and refer to Segment documentation on implementing Analytics for iOS for your app
+/* Please note that this is simply minimal code to demonstrate the functionality of FullStorySegmentMiddleware
+ please follow Apple's guidelines and refer to Segment documentation on implementing Analytics for your iOS app
  
- Below APIs are automatically forwared to FullStory based on the middleware settings
+ The APIs below are automatically forwarded to FullStory based on the middleware settings
 */
 
 // allowlisted events:
