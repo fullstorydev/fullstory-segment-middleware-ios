@@ -17,14 +17,13 @@
  Below APIs are automatically forwared to FullStory based on the middleware settings
 */
 
-// allowlisted event:
+// allowlisted events:
 @property (weak, nonatomic) IBOutlet UIButton *productViewed;
-// not allowlisted event:
-@property (weak, nonatomic) IBOutlet UIButton *viewedCheckoutStep;
-// allowlisted event:
 @property (weak, nonatomic) IBOutlet UIButton *completedCheckoutStep;
-// allowlisted event:
 @property (weak, nonatomic) IBOutlet UIButton *orderCompleted;
+
+// non-allowlisted events:
+@property (weak, nonatomic) IBOutlet UIButton *viewedCheckoutStep;
 
 @end
 
