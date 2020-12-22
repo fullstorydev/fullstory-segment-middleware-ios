@@ -5,20 +5,18 @@ def common_pods
   pod 'Analytics', '~> 3.0'
 end
 
-target 'FullStoryMiddlewareExample' do
+target 'FullStoryMiddleware' do
   common_pods
-  pod 'FullStorySegmentMiddleware', :path => '.'
 end
-
 
 target 'FullStoryMiddlewareTests' do
   common_pods
   pod 'OCMock', '~>3.6'
 end
 
-target 'FullStoryMiddleware' do
+target 'FullStoryMiddlewareExample' do
   common_pods
+  pod 'FullStorySegmentMiddleware', :path => '.'
 end
   
-
 
