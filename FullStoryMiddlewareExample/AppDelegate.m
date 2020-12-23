@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <Analytics/SEGAnalytics.h>
+#import <FullStoryMiddleware/FullStoryMiddleware.h>
 
 @interface AppDelegate ()
 
@@ -16,7 +18,43 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    // set certain events to be the only ones allowed to forward to FullStory
+    NSArray *allowList = @[@"Product Viewed", @"Order Completed", @"Completed Checkout Step"];
+    FullStoryMiddleware *fsm = [[FullStoryMiddleware alloc] initWithAllowlistEvents: allowList];
+    
+    // Enable to insert FS session URL to Segment event properties and contexts.
+    //
+    // Default is true.
+    fsm.enableFSSessionURLInEvents = true;
+    
+    // When calling Segment group, send group traits as userVars.
+    //
+    // Default is false.
+    fsm.enableGroupTraitsAsUserVars = true;
+    
+    // When calling Segment screen, send the screen event as custom events to FS.
+    //
+    // Default is false.
+    fsm.enableSendScreenAsEvents = true;
+    
+    // Allow all track events as FS custom events.
+    // Alternatively, allow list events that you would like to track.
+    //
+    // Note: enabling this will cause the middleware to ignore the event allowlist.
+    //
+    // Default is false.
+    fsm.allowlistAllTrackEvents = true;
+    
+    
+    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"YOUR_SEGMENT_KEY_HERE"];
+    configuration.trackApplicationLifecycleEvents = YES;
+    configuration.recordScreenViews = YES;
+    
+    // Add FullStoryMiddleware as one of the sourceMiddlewares
+    configuration.middlewares = @[fsm];
+    [SEGAnalytics setupWithConfiguration:configuration];
+
     return YES;
 }
 
