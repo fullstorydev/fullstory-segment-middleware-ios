@@ -151,6 +151,9 @@
                                properties:newProps
                                context:screenPayload.context
                                integrations:screenPayload.integrations];
+                } else {
+                    // if not responding to either, return nil so we abort and pass the original paylaod back
+                    newPayload = nil;
                 }
             }
             break;
