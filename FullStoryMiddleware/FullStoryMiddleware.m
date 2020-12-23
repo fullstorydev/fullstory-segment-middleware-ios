@@ -16,7 +16,7 @@
 // private SEGScreenPayload to provide the signitures to check for during respondsToSelector:@selector
 // this is due to a signiture change between Analytics 3 and 4.
 // We workaround it by checking if the init response to either of these below
-private @interface SEGScreenPayload()
+@interface SEGScreenPayload()
 - (instancetype)initWithName:(NSString *)name
                   properties:(NSDictionary *)properties
                      context:(NSDictionary *)context
