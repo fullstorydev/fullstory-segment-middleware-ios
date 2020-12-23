@@ -47,7 +47,7 @@
     fsm.allowlistAllTrackEvents = true;
     
     
-    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"jg953hydkaC9F8ViwqfMwfufFW9FlwJT"];
+    SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"YOUR_SEGMENT_KEY_HERE"];
     configuration.trackApplicationLifecycleEvents = YES;
     configuration.recordScreenViews = YES;
     
