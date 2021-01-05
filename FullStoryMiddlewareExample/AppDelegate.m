@@ -51,7 +51,6 @@
     // Default is false.
     fsm.enableIdentifyEvents = true;
     
-    
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"YOUR_SEGMENT_KEY_HERE"];
     configuration.trackApplicationLifecycleEvents = YES;
     configuration.recordScreenViews = YES;
