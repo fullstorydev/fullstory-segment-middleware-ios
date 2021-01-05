@@ -209,6 +209,18 @@
     OCMVerify([fs identify: @"testUserId" userVars:@{@"firstName_str": @"test first"}];);
 }
 
+- (void)testFullStoryMiddleware_IdentifyPayload_DisableIdentifyEvents_FSIdentifyNotCalled {
+    // create a mock for the FS
+    id fs = OCMClassMock([FS class]);
+
+    SEGContext *context = [FullStoryMiddlewareTest getFakeOriginalSEGContext:SEGEventTypeIdentify];
+
+    _fullStoryMiddleware.enableIdentifyEvents = false;
+    
+    [_fullStoryMiddleware context:context next:^(SEGContext * _Nullable newContext){}];
+    OCMReject([fs identify: [OCMArg any] userVars:[OCMArg any]];);
+}
+
 - (void)testFullStoryMiddleware_ScreenPayload_EnableSendScreenAsEvents_NextBlockCalled {
     _fullStoryMiddleware.enableSendScreenAsEvents = true;
     _fullStoryMiddleware.enableFSSessionURLInEvents = false;

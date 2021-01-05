@@ -46,13 +46,18 @@
     // Default is false.
     fsm.allowlistAllTrackEvents = true;
     
+    // Allow all identify events as FS identify.
+    //
+    // Default is false.
+    fsm.enableIdentifyEvents = true;
+    
     
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"YOUR_SEGMENT_KEY_HERE"];
     configuration.trackApplicationLifecycleEvents = YES;
     configuration.recordScreenViews = YES;
     
     // Add FullStoryMiddleware as one of the sourceMiddlewares
-    configuration.middlewares = @[fsm];
+    configuration.sourceMiddleware = @[fsm];
     [SEGAnalytics setupWithConfiguration:configuration];
 
     return YES;
