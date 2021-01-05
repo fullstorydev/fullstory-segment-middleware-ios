@@ -21,7 +21,7 @@
          self.enableFSSessionURLInEvents = true;
          self.allowlistAllTrackEvents = false;
          self.allowlistEvents = [[NSMutableArray alloc] initWithArray:allowlistEvents];
-         self.enableIdentifyEvents = true;
+         self.enableIdentifyEvents = YES;
      }
     return self;
 }
