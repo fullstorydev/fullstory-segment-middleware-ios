@@ -69,7 +69,6 @@
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayload_ReturnsTrackPayloadWithFSURL {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     OCMStub([fs currentSessionURL]).andReturn(@"testURL");
     
@@ -96,7 +95,6 @@
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayloadWithFSURL {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     OCMStub([fs currentSessionURL]).andReturn(@"testURL");
     
@@ -134,7 +132,6 @@
 }
 
 - (void)testFullStoryMiddleware_GroupPayload_DisableGroupTraitsAsUserVars_FSSetUserVarsCalledWithGroupId {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
 
     SEGContext *context = [FullStoryMiddlewareTest getFakeOriginalSEGContext:SEGEventTypeGroup];
@@ -166,7 +163,6 @@
 }
 
 - (void)testFullStoryMiddleware_GroupPayload_EnableGroupTraitsAsUserVars_FSSetUserVarsCalledWithGroupId {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.enableGroupTraitsAsUserVars = true;
@@ -200,7 +196,6 @@
 }
 
 - (void)testFullStoryMiddleware_IdentifyPayload_UserTraits_FSIdentifyCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
 
     SEGContext *context = [FullStoryMiddlewareTest getFakeOriginalSEGContext:SEGEventTypeIdentify];
@@ -210,7 +205,6 @@
 }
 
 - (void)testFullStoryMiddleware_IdentifyPayload_DisableIdentifyEvents_FSIdentifyNotCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
 
     SEGContext *context = [FullStoryMiddlewareTest getFakeOriginalSEGContext:SEGEventTypeIdentify];
@@ -246,7 +240,6 @@
 }
 
 - (void)testFullStoryMiddleware_ScreenPayload_EnableSendScreenAsEvents_FSEventCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.enableSendScreenAsEvents = true;
@@ -282,7 +275,6 @@
 }
 
 - (void)testFullStoryMiddleware_ScreenPayload_DisableSendScreenAsEvents_FSEventNotCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.enableSendScreenAsEvents = false;
@@ -318,7 +310,6 @@
 }
 
 - (void)testFullStoryMiddleware_TrackPayload_DisallowlistAllTrackEvents_NoAllowlistedEvents_FSEventNotCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.allowlistAllTrackEvents = false;
@@ -355,7 +346,6 @@
 }
 
 - (void)testFullStoryMiddleware_TrackPayload_DisallowlistAllTrackEvents_AllowlistedEvents_FSEventCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.allowlistAllTrackEvents = false;
@@ -392,7 +382,6 @@
 }
 
 - (void)testFullStoryMiddleware_TrackPayload_AllowlistAllTrackEvents_FSEventCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.allowlistAllTrackEvents = true;
@@ -453,7 +442,6 @@
 }
 
 - (void)testFullStoryMiddleware_ResetPayload_AllowlistAllTrackEvents_FSAnonymizeCalled {
-    // create a mock for the FS
     id fs = OCMClassMock([FS class]);
     
     _fullStoryMiddleware.allowlistAllTrackEvents = true;

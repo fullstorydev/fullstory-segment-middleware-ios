@@ -48,7 +48,7 @@
     
     // Allow all identify events as FS identify.
     //
-    // Default is false.
+    // Default is true.
     fsm.enableIdentifyEvents = true;
     
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:@"YOUR_SEGMENT_KEY_HERE"];

@@ -83,15 +83,15 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
                       "Viewed Checkout Step",
                       "Completed Checkout Step"])
 
-      // allow all events to be tracked by FS, default to false
+      // allow all events to be tracked by FS, default is false
       fsm.allowlistAllTrackEvents = true
-      // allow FS session URL to be added in Segemnt event properties, default to true
+      // allow FS session URL to be added in Segemnt event properties, default is true
       fsm.enableFSSessionURLInEvents = true
-      // enable to send group traits as userVars, default to false
+      // enable to send group traits as userVars, default is false
       fsm.enableGroupTraitsAsUserVars = true
-      // enable to send FS custom events on screen event, default to false
+      // enable to send FS custom events on screen event, default is false
       fsm.enableSendScreenAsEvents = true
-      // enable Segment identify events to be sent as FS identify event, default to true
+      // enable Segment identify events to be sent as FS identify event, default is true
       fsm.enableIdentifyEvents = true
 
       configuration.middlewares = [fsm]
