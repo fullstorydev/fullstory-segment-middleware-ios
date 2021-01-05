@@ -53,7 +53,7 @@
                 // optionally disabled with enableIdentifyEvents
                 if (self.enableIdentifyEvents) {
                   FSSuffixedProperties *traits = [[FSSuffixedProperties alloc] initWithProperties:payload.traits];
-                  [FS identify: payload.userId userVars:traits.suffixedProperties];
+                  [FS identify:payload.userId userVars:traits.suffixedProperties];
                 }
                 break;
             }
