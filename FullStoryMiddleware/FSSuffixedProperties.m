@@ -112,16 +112,21 @@
     NSString * suffix = @"";
 
     if ([obj isKindOfClass:[NSNumber class]]) {
-        // defaut to real
-        suffix = @"_real";
+        // defaut to int
+        suffix = @"_int";
         NSNumber *n = (NSNumber *) obj;
         const char *typeCode = n.objCType;
-        
-        if (!strcmp(typeCode, "B") || !strcmp(typeCode, "c")) {
+        if (n == (void*)kCFBooleanFalse || n == (void*)kCFBooleanTrue) {
             suffix = @"_bool";
-        } else if (!strcmp(typeCode,"i")) {
-            suffix = @"_int";
+        } else if (!strcmp(typeCode,"f") || !strcmp(typeCode,"d")) {
+            suffix = @"_real";
         }
+        
+//        if (!strcmp(typeCode, "B") || !strcmp(typeCode, "c")) {
+//            suffix = @"_bool";
+//        } else if (!strcmp(typeCode,"i")) {
+//            suffix = @"_int";
+//        }
     } else if ([obj isKindOfClass:[NSDate class]]) {
         suffix = @"_date";
     } else if([obj isKindOfClass:[NSString class]]) {

@@ -6,6 +6,7 @@ def common_pods
 end
 
 target 'FullStoryMiddleware' do
+  common_pods
 end
 
 target 'FullStoryMiddlewareTests' do
