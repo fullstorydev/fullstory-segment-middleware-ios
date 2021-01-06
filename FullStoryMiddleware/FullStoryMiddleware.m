@@ -140,17 +140,17 @@
                 // init has a different signiture for Analytics version < 4
                 if ([uninitPayload respondsToSelector:@selector(initWithName:properties:context:integrations:)]) {
                     newPayload = [uninitPayload
-                               initWithName:screenPayload.name
-                               properties:newProps
-                               context:screenPayload.context
-                               integrations:screenPayload.integrations];
-                }else if ([uninitPayload respondsToSelector:@selector(initWithName:category:properties:context:integrations:)]) {
+                                  initWithName:screenPayload.name
+                                  properties:newProps
+                                  context:screenPayload.context
+                                  integrations:screenPayload.integrations];
+                } else if ([uninitPayload respondsToSelector:@selector(initWithName:category:properties:context:integrations:)]) {
                     newPayload = [uninitPayload
-                               initWithName:screenPayload.name
-                               category:screenPayload.category
-                               properties:newProps
-                               context:screenPayload.context
-                               integrations:screenPayload.integrations];
+                                  initWithName:screenPayload.name
+                                  category:screenPayload.category
+                                  properties:newProps
+                                  context:screenPayload.context
+                                  integrations:screenPayload.integrations];
                 } else {
                     // if not responding to either, return nil so we abort and pass the original paylaod back
                     newPayload = nil;
