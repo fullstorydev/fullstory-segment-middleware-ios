@@ -62,9 +62,9 @@
 		04106E53251D2CFC007A2E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04106E54251D2CFC007A2E69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04A74E82D1F81BD1D77CDD1A /* Pods-FullStoryMiddlewareExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareExample.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample.release.xcconfig"; sourceTree = "<group>"; };
-		04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FullStoryMiddleware.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FullStoryMiddlewareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullStoryMiddlewareExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FullStoryMiddleware.framework; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddleware.framework"; sourceTree = "<absolute>"; };
+		04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FullStoryMiddlewareTests.xctest; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddlewareTests.xctest"; sourceTree = "<absolute>"; };
+		04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = FullStoryMiddlewareExample.app; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddlewareExample.app"; sourceTree = "<absolute>"; };
 		17D6CE0983DA4EEB9DF2AE1A /* Pods-FullStoryMiddlewareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.release.xcconfig"; sourceTree = "<group>"; };
 		21235F9700236CE4B2F4EAAE /* Pods-FullStoryMiddlewareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.debug.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.debug.xcconfig"; sourceTree = "<group>"; };
 		22DC07B9D1538ECCFB67C51E /* Pods-FullStoryMiddleware.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddleware.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddleware/Pods-FullStoryMiddleware.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,9 +121,6 @@
 				04106E41251D2CFA007A2E69 /* FullStoryMiddlewareExample */,
 				E4302D4B1DEDD6B1ED6BA332 /* Pods */,
 				011EAF25B233502141487A39 /* Frameworks */,
-				04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */,
-				04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */,
-				04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */,
 			);
 			sourceTree = "<group>";
 		};

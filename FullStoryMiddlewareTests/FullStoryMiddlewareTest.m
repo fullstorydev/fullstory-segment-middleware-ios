@@ -65,7 +65,7 @@
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeTrack);
        
     SEGPayload* result = [_fullStoryMiddleware getNewPayloadWithFSURL:segContextMock];
-    XCTAssertTrue([result isKindOfClass:[SEGTrackPayload class]]);
+    XCTAssertTrue(strcmp(object_getClassName(result), "SEGTrackPayload") == 0);
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_TrackPayload_ReturnsTrackPayloadWithFSURL {
@@ -91,7 +91,7 @@
     OCMStub([segContextMock eventType]).andReturn(SEGEventTypeScreen);
    
     SEGPayload* result = [_fullStoryMiddleware getNewPayloadWithFSURL:segContextMock];
-    XCTAssertTrue([result isKindOfClass:[SEGScreenPayload class]]);
+    XCTAssertTrue(strcmp(object_getClassName(result), "SEGScreenPayload") == 0);
 }
 
 - (void)testFullStoryMiddleware_GetNewPayloadWithFSURL_ScreenPayload_ReturnsScreenPayloadWithFSURL {
@@ -118,8 +118,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -149,8 +149,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -182,8 +182,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -226,8 +226,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -261,8 +261,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -296,8 +296,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -332,8 +332,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -368,8 +368,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -406,8 +406,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -428,8 +428,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -461,8 +461,8 @@
     // assert the context is correct when next block is called
     void(^next)(SEGContext * _Nullable newContext) = ^(SEGContext * _Nullable newContext){
         XCTAssertEqual(newContext.eventType, context.eventType);
-        XCTAssertEqual(newContext.userId, context.userId);
-        XCTAssertEqual(newContext.anonymousId, context.anonymousId);
+        XCTAssertEqual(newContext.payload.userId, context.payload.userId);
+        XCTAssertEqual(newContext.payload.anonymousId, context.payload.anonymousId);
         XCTAssertEqual(newContext.debug, context.debug);
         XCTAssertEqualObjects(newContext._analytics, context._analytics);
         XCTAssertEqualObjects(newContext.error, context.error);
@@ -500,9 +500,10 @@
         }
         case SEGEventTypeScreen: {
             SEGScreenPayload *screenPayload = [[SEGScreenPayload alloc] initWithName:@"testScreen"
-                                                                  properties:@{@"prop":@"testProp"}
-                                                                     context:emptyDict
-                                                                integrations:emptyDict];
+                                                                            category:@"testCategory"
+                                                                          properties:@{@"prop":@"testProp"}
+                                                                             context:emptyDict
+                                                                        integrations:emptyDict];
 
             return [[[SEGContext alloc] initWithAnalytics:sharedAnalytics]
                     modify:^(id<SEGMutableContext> _Nonnull ctx) {
@@ -572,6 +573,7 @@
         }
         case SEGEventTypeScreen: {
             return [[SEGScreenPayload alloc] initWithName:@"testScreen"
+                                                 category:@"testCategory"
                                                properties:props
                                                   context:emptyDict
                                              integrations:emptyDict];

@@ -1,12 +1,11 @@
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 def common_pods
-  pod 'FullStory', :http => 'https://ios-releases.fullstory.com/fullstory-1.7.0.tar.gz'
-  pod 'Analytics', '~> 3.0'
+  pod 'FullStory', :http => 'https://ios-releases.fullstory.com/fullstory-1.10.0.tar.gz'
+  pod 'Analytics', '~> 4.1.0'
 end
 
 target 'FullStoryMiddleware' do
-  common_pods
 end
 
 target 'FullStoryMiddlewareTests' do
