@@ -6,6 +6,7 @@ def common_pods
 end
 
 target 'FullStoryMiddleware' do
+  common_pods
 end
 
 target 'FullStoryMiddlewareTests' do
@@ -17,5 +18,3 @@ target 'FullStoryMiddlewareExample' do
   common_pods
   pod 'FullStorySegmentMiddleware', :path => '.'
 end
-  
-
