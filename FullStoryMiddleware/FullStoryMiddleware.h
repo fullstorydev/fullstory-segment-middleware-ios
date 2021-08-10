@@ -10,7 +10,7 @@
 #define FullStoryMiddleware_h
 
 #import <Foundation/Foundation.h>
-#import <Analytics/SEGMiddleware.h>
+#import <SEGMiddleware.h>
 
 //! Project version number for FullStoryMiddleware.
 FOUNDATION_EXPORT double FullStoryMiddlewareVersionNumber;

@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import <Foundation/Foundation.h>
-#import <Analytics/SEGAnalytics.h>
+#import <SEGAnalytics.h>
 #import <FullStory/FullStory.h>
 #import <OCMock/OCMock.h>
 #import "FullStoryMiddleware.h"

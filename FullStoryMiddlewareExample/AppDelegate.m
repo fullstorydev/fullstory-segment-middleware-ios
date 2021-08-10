@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Analytics/SEGAnalytics.h>
+#import <SEGAnalytics.h>
 #import <FullStoryMiddleware/FullStoryMiddleware.h>
 
 @interface AppDelegate ()
