@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Analytics/SEGAnalytics.h>
 
 @interface ViewController : UIViewController
 

@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Analytics/SEGMiddleware.h>
-#import <FullStory/FullStory.h>
 #import "FullStoryMiddleware.h"
 #import "FSSuffixedProperties.h"
 
