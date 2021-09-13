@@ -17,6 +17,10 @@
 @import Segment;
 #endif
 
+#if defined(__has_include) && __has_include(<Analytics/SEGMiddleware.h>)
+#import <Analytics/SEGMiddleware.h>
+#endif
+
 //! Project version number for FullStoryMiddleware.
 FOUNDATION_EXPORT double FullStoryMiddlewareVersionNumber;
 
