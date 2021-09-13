@@ -10,7 +10,16 @@
 #define FullStoryMiddleware_h
 
 #import <Foundation/Foundation.h>
+#import <FullStory/FullStory.h>
+#if defined(__has_include) && __has_include(<Analytics/SEGAnalytics.h>)
+#import <Analytics/SEGAnalytics.h>
+#else
+@import Segment;
+#endif
+
+#if defined(__has_include) && __has_include(<Analytics/SEGMiddleware.h>)
 #import <Analytics/SEGMiddleware.h>
+#endif
 
 //! Project version number for FullStoryMiddleware.
 FOUNDATION_EXPORT double FullStoryMiddlewareVersionNumber;

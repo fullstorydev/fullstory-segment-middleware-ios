@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import <Analytics/SEGAnalytics.h>
 
 @interface ViewController ()
 
