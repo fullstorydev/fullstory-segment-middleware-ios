@@ -1,7 +1,7 @@
 platform :ios, '11.0'
 
 def common_pods
-  pod 'FullStory', :http => 'https://ios-releases.fullstory.com/fullstory-1.17.1.tar.gz'
+  pod 'FullStory', :http => 'https://ios-releases.fullstory.com/fullstory-1.18.0.tar.gz'
   pod 'Analytics', '~> 4.1'
 end
 
