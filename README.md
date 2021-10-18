@@ -1,7 +1,5 @@
 # FullStory Segment Middleware iOS
 
-## Note: This project is currently under development
-
 Segment is a customer data platform that unifies data collection and provides data to every team in your company. The middleware is an easy way to integrate FullStory with the Segment Analytics for iOS SDK.
 
 With minimal code changes, the FullStory Segment Middleware provides developers the ability to send Segment Analytics data to FullStory, and adds FullStory session replay links to Segment events.
@@ -65,7 +63,7 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
     - Use CocoaPods to add to project:
 
       ```ruby
-      pod 'FullStorySegmentMiddleware', :git => 'https://github.com/fullstorydev/fullstory-segment-middleware-ios.git',:tag => '1.1'
+      pod 'FullStorySegmentMiddleware', :git => 'https://github.com/fullstorydev/fullstory-segment-middleware-ios.git',:tag => '1.2'
       ```
 
     - Alternatively, download the files manually:
