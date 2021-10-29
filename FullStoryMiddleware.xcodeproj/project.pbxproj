@@ -62,14 +62,14 @@
 		04106E53251D2CFC007A2E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04106E54251D2CFC007A2E69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04A74E82D1F81BD1D77CDD1A /* Pods-FullStoryMiddlewareExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareExample.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample.release.xcconfig"; sourceTree = "<group>"; };
-		04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FullStoryMiddleware.framework; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddleware.framework"; sourceTree = "<absolute>"; };
-		04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = FullStoryMiddlewareTests.xctest; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddlewareTests.xctest"; sourceTree = "<absolute>"; };
-		04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = FullStoryMiddlewareExample.app; path = "/Users/sabrina/Documents/ios/fullstory-segment-middleware-ios/build/Debug-iphoneos/FullStoryMiddlewareExample.app"; sourceTree = "<absolute>"; };
 		17D6CE0983DA4EEB9DF2AE1A /* Pods-FullStoryMiddlewareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.release.xcconfig"; sourceTree = "<group>"; };
 		21235F9700236CE4B2F4EAAE /* Pods-FullStoryMiddlewareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareTests.debug.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareTests/Pods-FullStoryMiddlewareTests.debug.xcconfig"; sourceTree = "<group>"; };
 		22DC07B9D1538ECCFB67C51E /* Pods-FullStoryMiddleware.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddleware.release.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddleware/Pods-FullStoryMiddleware.release.xcconfig"; sourceTree = "<group>"; };
 		59986B49906FF607E3B20F54 /* libPods-FullStoryMiddlewareTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FullStoryMiddlewareTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6386EDB2E2C02816EE0188BE /* libPods-FullStoryMiddlewareExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FullStoryMiddlewareExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6944B71B272C471100F2A831 /* FullStoryMiddleware.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FullStoryMiddleware.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6944B71C272C471100F2A831 /* FullStoryMiddlewareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FullStoryMiddlewareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6944B71D272C471100F2A831 /* FullStoryMiddlewareExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullStoryMiddlewareExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2626ED4BB3DFEB2621319AA /* Pods-FullStoryMiddleware.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddleware.debug.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddleware/Pods-FullStoryMiddleware.debug.xcconfig"; sourceTree = "<group>"; };
 		A6AD7FE6FAFA682A46013891 /* libPods-FullStoryMiddleware.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FullStoryMiddleware.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4AE545A30E82F8A01AEE81A /* Pods-FullStoryMiddlewareExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FullStoryMiddlewareExample.debug.xcconfig"; path = "Target Support Files/Pods-FullStoryMiddlewareExample/Pods-FullStoryMiddlewareExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +121,9 @@
 				04106E41251D2CFA007A2E69 /* FullStoryMiddlewareExample */,
 				E4302D4B1DEDD6B1ED6BA332 /* Pods */,
 				011EAF25B233502141487A39 /* Frameworks */,
+				6944B71B272C471100F2A831 /* FullStoryMiddleware.framework */,
+				6944B71C272C471100F2A831 /* FullStoryMiddlewareTests.xctest */,
+				6944B71D272C471100F2A831 /* FullStoryMiddlewareExample.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,7 +215,7 @@
 			);
 			name = FullStoryMiddleware;
 			productName = FullStoryMiddleware;
-			productReference = 04BE03BC2538965B0092EC6F /* FullStoryMiddleware.framework */;
+			productReference = 6944B71B272C471100F2A831 /* FullStoryMiddleware.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		04106DA3251D27BE007A2E69 /* FullStoryMiddlewareTests */ = {
@@ -232,7 +235,7 @@
 			);
 			name = FullStoryMiddlewareTests;
 			productName = FullStoryMiddlewareTests;
-			productReference = 04BE03BD2538965B0092EC6F /* FullStoryMiddlewareTests.xctest */;
+			productReference = 6944B71C272C471100F2A831 /* FullStoryMiddlewareTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		04106E3F251D2CFA007A2E69 /* FullStoryMiddlewareExample */ = {
@@ -251,7 +254,7 @@
 			);
 			name = FullStoryMiddlewareExample;
 			productName = FullStoryMiddlewareExample;
-			productReference = 04BE03BE2538965B0092EC6F /* FullStoryMiddlewareExample.app */;
+			productReference = 6944B71D272C471100F2A831 /* FullStoryMiddlewareExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -540,7 +543,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -598,7 +601,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -622,12 +625,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = FullStoryMiddleware/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fullstorydev.FullStoryMiddleware;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -649,12 +652,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = FullStoryMiddleware/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fullstorydev.FullStoryMiddleware;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -708,7 +711,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KZF5HG57S9;
 				INFOPLIST_FILE = FullStoryMiddlewareExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,7 +730,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KZF5HG57S9;
 				INFOPLIST_FILE = FullStoryMiddlewareExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
