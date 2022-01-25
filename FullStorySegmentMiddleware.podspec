@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'FullStorySegmentMiddleware'
-  spec.version      = '1.2.1'
+  spec.version      = '1.2.2'
   spec.summary      = 'Demonstrates the full potential of joining forces between Segment and FullStory.'
   spec.homepage     = 'https://github.com/fullstorydev/fullstory-segment-middleware-ios'
   spec.license      = { type: 'MIT', file: 'LICENSE' }

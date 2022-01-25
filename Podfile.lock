@@ -1,14 +1,14 @@
 PODS:
   - Analytics (4.1.6)
-  - FullStory (1.19.1)
-  - FullStorySegmentMiddleware (1.2.1):
+  - FullStory (1.23.0)
+  - FullStorySegmentMiddleware (1.2.2):
     - Analytics
     - FullStory
   - OCMock (3.8.1)
 
 DEPENDENCIES:
   - Analytics (~> 4.1)
-  - "FullStory (from `{:http=>\"https://ios-releases.fullstory.com/fullstory-1.19.1.tar.gz\"}`)"
+  - "FullStory (from `{:http=>\"https://ios-releases.fullstory.com/fullstory-1.23.0.tar.gz\"}`)"
   - FullStorySegmentMiddleware (from `.`)
   - OCMock (~> 3.8)
 
@@ -19,20 +19,20 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   FullStory:
-    :http: https://ios-releases.fullstory.com/fullstory-1.19.1.tar.gz
+    :http: https://ios-releases.fullstory.com/fullstory-1.23.0.tar.gz
   FullStorySegmentMiddleware:
     :path: "."
 
 CHECKOUT OPTIONS:
   FullStory:
-    :http: https://ios-releases.fullstory.com/fullstory-1.19.1.tar.gz
+    :http: https://ios-releases.fullstory.com/fullstory-1.23.0.tar.gz
 
 SPEC CHECKSUMS:
   Analytics: eefe524436f904b8bb3f8c8c3425280e43b34efc
-  FullStory: 870920ff9930d7ec298cb6688a4e8d5beab228ca
-  FullStorySegmentMiddleware: 7682f00cf3e5dfc60876bfefd73b566afea7ee5d
+  FullStory: 2d25da006a0327bb54d667069157eb916c3db17e
+  FullStorySegmentMiddleware: 704e6a7ff8a370a3030d940178db287faa397d54
   OCMock: 29f6e52085b4e7d9b075cbf03ed7c3112f82f934
 
-PODFILE CHECKSUM: 2f4cc8235b5b4b9c51d3968529a49a5db088215c
+PODFILE CHECKSUM: 38179c9ec8c23deadfaaeb29452d20416e119c05
 
 COCOAPODS: 1.11.2

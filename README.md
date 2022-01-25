@@ -63,7 +63,7 @@ With FullStory for Mobile Apps, you can retrieve a link to the session replay an
     - Use CocoaPods to add to project:
 
       ```ruby
-      pod 'FullStorySegmentMiddleware', :git => 'https://github.com/fullstorydev/fullstory-segment-middleware-ios.git',:tag => '1.2.1'
+      pod 'FullStorySegmentMiddleware', :git => 'https://github.com/fullstorydev/fullstory-segment-middleware-ios.git',:tag => '1.2.2'
       ```
 
     - Alternatively, download the files manually:
