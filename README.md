@@ -1,3 +1,7 @@
+**Deprecation Notice**
+
+As of February 22nd, 2024, this repository will no longer have any maintenance performed, but will remain published in its current form for the time being. Please be sure to consider this when utilizing any of the information & code found within.
+
 # FullStory Segment Middleware iOS
 
 Segment is a customer data platform that unifies data collection and provides data to every team in your company. The middleware is an easy way to integrate FullStory with the Segment Analytics for iOS SDK.
